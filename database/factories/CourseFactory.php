@@ -28,6 +28,7 @@ class CourseFactory extends Factory
         return [
             'name'=> $name, 
             'description' => $des,
+            'workshop' => fake()->boolean()
         ];
     }
 }

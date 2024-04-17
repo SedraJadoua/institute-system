@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\specialty;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -33,7 +34,7 @@ class TeacherFactory extends Factory
         $email = fake()->unique()->safeEmail();
         return [
             'email' => $email,
-            'password' => Str::random(10),
+            'password' => Hash::make('2002'),
             'phoneNumber' => fake()->phoneNumber(),
             'first_name' => $firstName,
             'last_name' => $lastName,

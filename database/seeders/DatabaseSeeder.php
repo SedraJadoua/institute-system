@@ -29,5 +29,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\file::factory(2)->create(); 
         \App\Models\taskStudent::factory(2)->create(); 
         \App\Models\payment::factory(2)->create(); 
+        \App\Models\evaluation::factory(20)->create(); 
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\student>
@@ -28,7 +29,7 @@ class studentFactory extends Factory
         $email = fake()->unique()->safeEmail();
         return [
             'email'=> $email ,
-            'password' => Str::random(10),
+            'password' => Hash::make('2002'),
             'first_name' => $first_name ,
             'last_name' => $last_name ,
             'user_name' => strstr($email , '@' , true),

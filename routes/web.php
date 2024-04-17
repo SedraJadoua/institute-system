@@ -1,6 +1,9 @@
 <?php
 
+use App\Mail\LoginCredentials;
+use App\Mail\studentLoginCredentials;
 use App\Models\course;
+use App\Models\evaluation;
 use App\Models\file;
 use App\Models\member;
 use App\Models\message;
@@ -9,6 +12,7 @@ use App\Models\specialty;
 use App\Models\student;
 use App\Models\teacher;
 use App\Models\teacherCourse;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,10 +31,6 @@ Route::get('/', function () {
 });
 
 Route::get('data' , function(){
-     return student::with([ 'taskStudent' ])->get();
+     return __('validation.email');
 });
 
-Route::get('/course', function () {
-    return student::all();
-    
-});

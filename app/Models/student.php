@@ -6,16 +6,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Lang;
+use Laravel\Passport\HasApiTokens;
 
-class student extends Model
+class student extends Authenticatable
 {
-    use HasFactory , HasUuids;
+    use HasFactory , HasUuids , HasApiTokens , SoftDeletes;
 
-    protected $hidden = ['pivot'];
+    protected $hidden = ['pivot' , 'deleted_at' , 'created_at' , 'updated_at', 'password'];
+    protected $fillable = ['email' ];
+    
+    protected function getFirstNameAttribute($value){
+       $FirtName = json_decode($value , true);
+       return $FirtName[Lang::getLocale()];
+    }
+
+    protected function getLastNameAttribute($value){
+       $LastName = json_decode($value , true);
+       return $LastName[Lang::getLocale()];
+    }
 
     /**
      * Get all of the members for the student
@@ -47,7 +61,6 @@ class student extends Model
         return $this->belongsToMany(teacherCourse::class, 'course_teacher_student', 'student_id', 'course_teacher_id');
     }
 
-
     /**
      * The sessions that belong to the student
      *
@@ -69,5 +82,7 @@ class student extends Model
         return $this->hasManyThrough(taskStudent::class, courseTeacherStudent::class);
  
     }
+
+
    
 }

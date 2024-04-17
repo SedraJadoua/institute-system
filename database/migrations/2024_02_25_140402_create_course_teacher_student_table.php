@@ -15,9 +15,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->boolean('paid')->default(false);
             $table->uuid('course_teacher_id');
-            $table->foreign('course_teacher_id')->references('id')->on('course_teacher')->noActionOnDelete();
+            $table->foreign('course_teacher_id')->references('id')->on('course_teacher')->noActionOnDelete()->cascadeOnUpdate();
             $table->uuid('student_id');
-            $table->foreign('student_id')->references('id')->on('students')->noActionOnDelete();
+            $table->foreign('student_id')->references('id')->on('students')->noActionOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
