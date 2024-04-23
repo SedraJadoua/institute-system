@@ -36,7 +36,6 @@ class studentFactory extends Factory
             'age' => fake()->numberBetween(18 , 30),
             'gender' => fake()->boolean(),
             'phoneNumber' => fake()->phoneNumber(),
-            
         ];
     }
 }

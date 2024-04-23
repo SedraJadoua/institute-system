@@ -36,9 +36,9 @@ use HasFactory , HasUuids  , InteractsWithMedia;
      */
     public function teachers(): BelongsToMany
     {
-        return $this->belongsToMany(teacher::class, 'course_teacher', 'course_id', 'teacher_id');
+        return $this->belongsToMany(teacher::class, 'course_teacher', 'course_id', 'teacher_id')
+        ->withPivot(['level' , 'total_cost' , 'total_days', 'updated_at' , 'created_at' ]);
     }
-
 
     /**
      * Get all of the daysSystem for the course

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\auth;
 use App\Http\Controllers\courseController;
+use App\Http\Controllers\sessionController;
+use App\Http\Controllers\specialtyController;
 use App\Http\Controllers\studentController;
 use App\Http\Controllers\teacherController;
 use Illuminate\Http\Request;
@@ -40,6 +42,12 @@ Route::prefix('teacher')
        Route::get('/restoreAll', 'restoreAll');
        Route::post('/restore/{id}', 'restore');
 });
+Route::prefix('session')
+->controller(sessionController::class)
+->group(function(){
+       Route::post('/ees', 'ees');
+       Route::post('/restore/{id}', 'restore');
+});
 Route::prefix('student')
 ->controller(studentController::class)
 ->middleware('admin')
@@ -48,5 +56,7 @@ Route::prefix('student')
        Route::post('/restore/{id}', 'restore');
 });
 Route::resource('/course', courseController::class);
+Route::resource('/session', sessionController::class);
+Route::resource('/specialty', specialtyController::class);
 Route::resource('/teacher', teacherController::class)->middleware('admin');
 Route::resource('/student', studentController::class)->middleware('admin');

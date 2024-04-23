@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Requests\course;
+namespace App\Http\Requests\specialty;
 
 use App\Rules\arabicLanguage;
 use App\Rules\englishLanguage;
+use App\Rules\uniqueJsonContent;
 use App\Trait\ResponseJson;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +12,6 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class storeRequest extends FormRequest
 {
-  
     use ResponseJson;
    
     protected function failedValidation(Validator $validator)
@@ -35,25 +35,11 @@ class storeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name_ar' =>[ 'required' , 'string' , new arabicLanguage ],
-            'name_en' => [ 'required' , 'string' , new englishLanguage ],
-            'description_ar' => [ 'required' , 'string' , new arabicLanguage ],
-            'description_en' => [ 'required' , 'string' , new englishLanguage ],
-            'workshop' => 'required|boolean',
-            'photo' => 'required|max:2048' , 
-            'level' => 'required|integer|between:0,3' , 
-            'total_days' => 'required|integer' , 
-            'total_cost' => 'required|numeric|gte:0.0|lte:10000000000000000000.0' , 
-            'teacher_id' => 'required|exists:teachers,id' , 
-
+            'specialty_name_ar' => [
+             'required' ,
+             new arabicLanguage ,
+              new uniqueJsonContent()], 
+            'specialty_name_en' => ['required' , new englishLanguage , new uniqueJsonContent()], 
         ];
-
     }
-
-     public function messages()
-     {
-        return [
-           'photo.max' => __('validation.max.file')
-        ];
-     }
 }

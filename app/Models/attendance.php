@@ -11,6 +11,7 @@ class attendance extends Model
 {
     use HasFactory , HasUuids;
 
+    protected $hidden = ['created_at' , 'updated_at'];
     /**
      * Get the student that owns the attendance
      *

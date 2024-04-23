@@ -2,9 +2,13 @@
 
 return [
    'insert_course' => 'Course Inserted successfully', 
+   'insert_session' => 'Session Inserted successfully', 
+   'insert_specialty' => 'Specialty Inserted successfully', 
    'error_course_not_found' => 'Sorry, a course does not exists recently',
    'error_teacher_not_found' => 'Sorry, a teacher does not exists recently',
    'error_student_not_found' => 'Sorry, a student does not exists recently',
+   'error_session_not_found' => 'Sorry, a session does not exists recently',
+   'error_specialty_not_found' => 'Sorry, a specialty does not exists recently',
    'delete' => 'Deleted successfully', 
    'update' => 'Updated successfully', 
    'update_Student' => 'Updated student successfully', 

@@ -7,7 +7,6 @@ use App\Http\Requests\course\updateRequest;
 use App\Models\course;
 use App\Services\repo\interfaces\courseInterface;
 use App\Trait\ResponseJson;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 
 class courseClass implements courseInterface
@@ -42,13 +41,35 @@ class courseClass implements courseInterface
                 'en' => $request->description_en,
                 'ar' => $request->description_ar
             ]),
-
         ]);
         $fileAdders = $course->addMultipleMediaFromRequest(['photo'])
             ->each(function ($fileAdder) {
                 $fileAdder->toMediaCollection('photos');
             });
 
+            if (is_array($request->teacher_id)) {
+            foreach ($request->teacher_id  as $teacher_id){
+                    $course->teachers()->attach($teacher_id, [
+                        'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                        'level' => $request->level, 
+                        'total_cost' => $request->total_cost,
+                        'total_days' => $request->total_days,
+                        'created_at' => now(),
+                        'updated_at' => now(),    
+                    ]);
+                }
+            } else {
+                    $course->teachers()->attach($request->teacher_id, [
+                        'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                        'level' => $request->level, 
+                        'total_cost' => $request->total_cost,
+                        'total_days' => $request->total_days,
+                        'created_at' => now(),
+                        'updated_at' => now(),    
+                    ]);
+                
+            }
+            
         return $this->returnSuccessMessage(__('strings.insert_course'), $course);
     }
 

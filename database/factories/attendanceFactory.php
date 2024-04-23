@@ -21,6 +21,7 @@ class attendanceFactory extends Factory
         return [
             'student_id' => student::factory(),
             'session_id' => session::factory(),
+            'status' => fake()->boolean(),
         ];
     }
 }

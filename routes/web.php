@@ -31,6 +31,6 @@ Route::get('/', function () {
 });
 
 Route::get('data' , function(){
-     return __('validation.email');
+     return course::with('teachers')->get();
 });
 

@@ -2,29 +2,46 @@
 
 namespace App\Services\repo\classes;
 
+use App\Http\Requests\session\storeRequest;
 use App\Http\Requests\student\updateRequest;
+use App\Models\session;
 use App\Models\student;
-use App\Services\repo\interfaces\studentInterface;
+use App\Services\repo\interfaces\sessionInterface;
 use App\Trait\ResponseJson;
+use Illuminate\Support\Facades\Request;
 
-class studentClass implements studentInterface {
+class sessionClass implements sessionInterface {
      
     use ResponseJson;
     
     public function index(){
-        return student::with(['courseTeacher.teacher' , 'courseTeacher.course'])->get();
+        return session::with(['courseTeacher' , 'students.attendances'])->get();
+    }
+
+
+    public function store(storeRequest $request)
+    {
+        // return $request;
+        $session = session::create([
+            'title' => json_encode([
+                'ar' => $request->title_ar,
+                'en' => $request->title_en,
+            ]),
+            'date' => $request->date,
+            'course_teacher_id' => $request->course_teacher_id,
+        ]);
+        
+        return $this->returnSuccessMessage(__('strings.insert_session'), $session);
     }
 
     public function show(string $id){
         try {
-            $student = student::with(['courseTeacher.attendance' , 'courseTeacher.sessions'])->findOrFail($id);
-            return $student->makeHidden('deleted_at');
+            $session = session::with(['students.attendances' , 'courseTeacher'])->findOrFail($id);
+            return $session;
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-
-            return $this->returnError(__('strings.error_student_not_found'));
+            return $this->returnError(__('strings.error_session_not_found'));
         }
-}
-
+    }
 
     public function update(updateRequest $request ,string $id){
         try {
@@ -54,21 +71,5 @@ class studentClass implements studentInterface {
         }
     }
 
-    public function restore($id) 
-    {
-        try {
-            $student = student::onlyTrashed()->findOrFail($id);
-            $student->restore();
-            return $this->returnSuccessMessage(__('strings.restore_teacher') , $student);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $th) {
-            return $this->returnError(__('strings.error_student_not_found'));
-        }   
-    }
 
-
-    public function restoreAll() 
-    {
-        $students = student::onlyTrashed()->restore(); 
-        return $this->returnSuccessMessage(__('strings.restore_All_student') , $students);
-    }
 }

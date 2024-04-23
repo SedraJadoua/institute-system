@@ -57,7 +57,7 @@ class studentController extends Controller
     {
         return $this->student->restore($id);
     }
-   
+    
     public function restoreAll()
     {
         return $this->student->restoreAll();

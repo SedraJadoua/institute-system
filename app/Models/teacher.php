@@ -28,7 +28,7 @@ class teacher extends Authenticatable
 
     protected function getLastNameAttribute($value){
         $last_name = json_decode($value , true);
-        return $last_name[Lang::getLocale()];
+    return $last_name[Lang::getLocale()];
     }
 
 
@@ -39,7 +39,8 @@ class teacher extends Authenticatable
      */
     public function courses(): BelongsToMany
     {
-        return $this->belongsToMany(course::class, 'course_teacher', 'teacher_id', 'course_id');
+        return $this->belongsToMany(course::class, 'course_teacher', 'teacher_id', 'course_id')
+        ->withPivot('level', 'total_cost', 'total_days');;
         
     }
 

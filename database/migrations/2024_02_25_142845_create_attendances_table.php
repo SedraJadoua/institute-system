@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('student_id');
             $table->uuid('session_id');
+            $table->boolean('status')->default(false);
             $table->foreign('student_id')->references('id')->on('students')->cascadeOnDelete();
             $table->foreign('session_id')->references('id')->on('sessions')->cascadeOnDelete();
             $table->timestamps();
