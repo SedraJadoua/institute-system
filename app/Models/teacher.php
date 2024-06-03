@@ -16,7 +16,7 @@ class teacher extends Authenticatable
 {
     use HasFactory , HasUuids , HasApiTokens , SoftDeletes;
 
-    protected $fillable = ['speciality_id' , 'is_admin'];
+    protected $fillable = ['speciality_id' , 'is_admin' , 'photo'];
 
     protected $hidden = ['pivot' , 'is_admin'  ,'deleted_at' , 'created_at' , 'updated_at', 'password'];
 
@@ -31,6 +31,10 @@ class teacher extends Authenticatable
     return $last_name[Lang::getLocale()];
     }
 
+
+    protected function getPhotoAttribute($value){
+        return asset('storage/images/'.$value);
+     }
 
     /**
      * The courses that belong to the teacher

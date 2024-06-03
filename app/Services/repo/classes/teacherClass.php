@@ -2,10 +2,13 @@
 
 namespace App\Services\repo\classes;
 
+use App\Http\Requests\photo\userPhotoRequest;
 use App\Http\Requests\teacher\updateRequest;
+use App\Models\student;
 use App\Models\teacher;
 use App\Services\repo\interfaces\teacherInterface;
 use App\Trait\ResponseJson;
+use Illuminate\Support\Facades\File;
 
 class teacherClass implements teacherInterface {
      
@@ -41,14 +44,41 @@ class teacherClass implements teacherInterface {
         }
     }
 
-    public function addPhoto(Request $request , string $id)
+    public function addPhoto(userPhotoRequest $request)
     {
-        try {
-            $teacher = teacher::findOrFail($id);
-             return $this->returnSuccessMessage(trans('strings.delete'), $course);
+        try 
+        {
+            $teacher = teacher::findOrFail($request->teacher_id);
+            $photo = $request->photo;
+            $photoName = time().'.'.$photo->extension();
+            $teacher->photo = $photoName;
+            $teacher->save();
+            $photo->move(public_path('storage/images/'),$photoName);
+           
+            return $this->returnSuccessMessage(trans('strings.photo_add'), $teacher);
+     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+         return $this->returnError(('strings.error_teacher_not_found'));
+     }
+}
+
+
+    public function updatePhoto(userPhotoRequest $request)
+    {
+        try 
+        {
+            $teacher = teacher::findOrFail($request->teacher_id);
+            $fileUrl = parse_url($teacher->photo);
+            $relativePath = $fileUrl['path'];
+            File::delete(public_path($relativePath));
+            $photo = $request->photo;
+            $photoName = time().'.'.$photo->extension();
+            $photo->move(public_path('storage/images'),$photoName);
+            $teacher->photo = $photoName;
+            $teacher->save();
+            return $this->returnSuccessMessage(trans('strings.photo_add'), $teacher);
          
      } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-         return $this->returnError(__('strings.error_teacher_not_found'));
+         return $this->returnError(('strings.error_teacher_not_found'));
      }
     }
 

@@ -5,6 +5,7 @@ return [
    'insert_session' => 'Session Inserted successfully', 
    'insert_photo' => 'Photo inserted successfully', 
    'insert_specialty' => 'Specialty Inserted successfully', 
+   'photo_add' => 'photo added successfully' ,
    'error_course_not_found' => 'Sorry, a course does not exists recently',
    'error_teacher_not_found' => 'Sorry, a teacher does not exists recently',
    'error_student_not_found' => 'Sorry, a student does not exists recently',

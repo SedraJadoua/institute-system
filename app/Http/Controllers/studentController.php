@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\photo\userPhotoRequest;
 use App\Http\Requests\student\updateRequest;
 use App\Services\repo\interfaces\studentInterface;
 use Illuminate\Http\Request;
@@ -43,6 +44,15 @@ class studentController extends Controller
     public function update(updateRequest $request, string $id)
     {
         return $this->student->update($request , $id);
+    }
+
+    public function addPhoto(userPhotoRequest $request)
+    {
+        return $this->student->addPhoto($request);
+    }
+    public function updatePhoto(userPhotoRequest $request)
+    {
+        return $this->student->updatePhoto($request);
     }
 
     /**

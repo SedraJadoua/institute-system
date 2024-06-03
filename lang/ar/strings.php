@@ -7,6 +7,7 @@ return [
    'insert_specialty' => 'تم إدراج التخصص بنجاح', 
    'insert_photo' => 'تم إدراج الصورة بنجاح', 
    'insert_specialty' => 'تم إدراج التخصص بنجاح', 
+   'photo_add' => 'تم اضافة الصورة بنجاح' ,
    'delete' => 'تم الحذف بنجاح', 
    'delete_photo' => 'تم حذف الصورة بنجاح', 
    'error_course_not_found' => 'عذرا ، الدورة التدريبية غير موجودة مؤخرا', 

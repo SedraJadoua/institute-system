@@ -44,10 +44,12 @@ Route::prefix('course')->controller(courseController::class)->group(function(){
 });
 Route::prefix('teacher')
 ->controller(teacherController::class)
-->middleware('admin')
+// ->middleware('admin')
 ->group(function(){
        Route::get('/restoreAll', 'restoreAll');
        Route::post('/restore/{id}', 'restore');
+       Route::post('/addPhoto', 'addPhoto');
+       Route::post('/updatePhoto', 'updatePhoto');
 });
 Route::prefix('session')
 ->controller(sessionController::class)
@@ -57,10 +59,12 @@ Route::prefix('session')
 });
 Route::prefix('student')
 ->controller(studentController::class)
-->middleware('admin')
+// ->middleware('admin')
 ->group(function(){
        Route::get('/restoreAll', 'restoreAll');
        Route::post('/restore/{id}', 'restore');
+       Route::post('/addPhoto', 'addPhoto');
+       Route::post('/updatePhoto', 'updatePhoto');
 });
 Route::prefix('image')
 ->controller(imageController::class)
@@ -73,8 +77,10 @@ Route::resource('/course', courseController::class);
 Route::resource('/classRoom', classroomController::class);
 Route::resource('/session', sessionController::class);
 Route::resource('/specialty', specialtyController::class);
-Route::resource('/teacher', teacherController::class)->middleware('admin');
-Route::resource('/student', studentController::class)->middleware('admin');
+Route::resource('/teacher', teacherController::class);
+// ->middleware('admin');
+Route::resource('/student', studentController::class);
+// ->middleware('admin');
 Route::resource('/taskStudent', taskStudentController::class);
 Route::resource('/task', taskController::class);
 

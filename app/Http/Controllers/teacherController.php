@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\photo\userPhotoRequest;
 use App\Http\Requests\teacher\updateRequest;
 use App\Services\repo\interfaces\teacherInterface;
 use Illuminate\Http\Request;
@@ -37,6 +38,15 @@ class teacherController extends Controller
         return $this->teacher->show($id);
     }
 
+
+    public function addPhoto(userPhotoRequest $request)
+    {
+        return $this->teacher->addPhoto($request);
+    }
+    public function updatePhoto(userPhotoRequest $request)
+    {
+        return $this->teacher->updatePhoto($request);
+    }
     /**
      * Update the specified resource in storage.
      */

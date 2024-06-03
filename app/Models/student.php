@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,7 +17,8 @@ class student extends Authenticatable
     use HasFactory , HasUuids , HasApiTokens , SoftDeletes;
 
     protected $hidden = ['pivot' , 'deleted_at' , 'created_at' , 'updated_at', 'password'];
-    protected $fillable = ['email' ];
+    protected $fillable = ['email' , 'photo' ];
+    
     
     protected function getFirstNameAttribute($value){
        $FirtName = json_decode($value , true);
@@ -30,6 +29,10 @@ class student extends Authenticatable
        $LastName = json_decode($value , true);
        return $LastName[Lang::getLocale()];
     }
+
+    protected function getPhotoAttribute($value){
+        return asset('storage/images/'.$value);
+     }
 
     /**
      * Get all of the members for the student
