@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Lang;
 
 class daysSystem extends Model
 {
@@ -14,6 +15,12 @@ class daysSystem extends Model
     
     protected $table = 'days_system';
 
+
+    public function getNameAttribute($value)
+    {
+        $name = json_decode($value , true);
+        return $name[Lang::getLocale()];
+    }
     /**
      * Get the classroom that owns the daysSystem
      *

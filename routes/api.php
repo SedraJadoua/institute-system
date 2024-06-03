@@ -1,11 +1,16 @@
 <?php
 
 use App\Http\Controllers\auth;
+use App\Http\Controllers\classroomController;
 use App\Http\Controllers\courseController;
+use App\Http\Controllers\imageController;
 use App\Http\Controllers\sessionController;
 use App\Http\Controllers\specialtyController;
 use App\Http\Controllers\studentController;
+use App\Http\Controllers\taskController;
+use App\Http\Controllers\taskStudentController;
 use App\Http\Controllers\teacherController;
+use App\Models\taskStudent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +39,8 @@ Route::prefix('auth')->controller(auth::class)->group(function(){
 Route::prefix('course')->controller(courseController::class)->group(function(){
        Route::get('/NewestWorkshops', 'newestWorkshop');
        Route::get('/NewestCourses', 'newestCourses');
+       Route::post('/ProgressOfCourse', 'ProgressOfCourse');
+
 });
 Route::prefix('teacher')
 ->controller(teacherController::class)
@@ -55,8 +62,19 @@ Route::prefix('student')
        Route::get('/restoreAll', 'restoreAll');
        Route::post('/restore/{id}', 'restore');
 });
+Route::prefix('image')
+->controller(imageController::class)
+->group(function(){
+       Route::post('/update/{id}', 'update');
+       Route::post('/delete/{id}', 'destroy');
+       Route::post('/store', 'store');
+});
 Route::resource('/course', courseController::class);
+Route::resource('/classRoom', classroomController::class);
 Route::resource('/session', sessionController::class);
 Route::resource('/specialty', specialtyController::class);
 Route::resource('/teacher', teacherController::class)->middleware('admin');
 Route::resource('/student', studentController::class)->middleware('admin');
+Route::resource('/taskStudent', taskStudentController::class);
+Route::resource('/task', taskController::class);
+

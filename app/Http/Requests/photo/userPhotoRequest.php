@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\teacher;
+namespace App\Http\Requests\photo;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class updateRequest extends FormRequest
+class userPhotoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

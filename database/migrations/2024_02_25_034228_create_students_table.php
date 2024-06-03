@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('gender');
+            $table->string('photo')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

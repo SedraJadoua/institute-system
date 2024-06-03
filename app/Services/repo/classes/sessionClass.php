@@ -6,6 +6,7 @@ use App\Http\Requests\session\storeRequest;
 use App\Http\Requests\student\updateRequest;
 use App\Models\session;
 use App\Models\student;
+use App\Models\teacherCourse;
 use App\Services\repo\interfaces\sessionInterface;
 use App\Trait\ResponseJson;
 use Illuminate\Support\Facades\Request;
@@ -15,7 +16,7 @@ class sessionClass implements sessionInterface {
     use ResponseJson;
     
     public function index(){
-        return session::with(['courseTeacher' , 'students.attendances'])->get();
+       return session::with(['courseTeacher' , 'students.attendances'])->get();
     }
 
 

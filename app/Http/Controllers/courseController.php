@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\course\storeRequest;
 use App\Http\Requests\course\updateRequest;
 use App\Services\repo\interfaces\courseInterface;
-// use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request;
+use App\Trait\ResponseJson;
+use Illuminate\Http\Request;
 
 class courseController extends Controller
 {
+   use ResponseJson;
+
     protected $course;
     public function __construct(courseInterface $course) {
         $this->course = $course;
@@ -32,12 +34,24 @@ class courseController extends Controller
         return $this->course->newestCourses();
     }
 
+
+    public function ProgressOfCourse(Request $request)
+    {
+        return $this->course->ProgressOfCourse($request);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(storeRequest $request)
     {
-        return $this->course->store($request);
+        $data =[];
+        try {
+           $data =  $this->course->store($request);
+           return  $this->returnSuccessMessage(__('strings.insert_course'),$data);
+        } catch (\Throwable $th) {
+            return $this->returnError($th->getMessage());
+        }
     }
 
     /**

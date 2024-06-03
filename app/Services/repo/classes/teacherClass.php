@@ -41,6 +41,16 @@ class teacherClass implements teacherInterface {
         }
     }
 
+    public function addPhoto(Request $request , string $id)
+    {
+        try {
+            $teacher = teacher::findOrFail($id);
+             return $this->returnSuccessMessage(trans('strings.delete'), $course);
+         
+     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+         return $this->returnError(__('strings.error_teacher_not_found'));
+     }
+    }
 
     public function destroy($id)
     {

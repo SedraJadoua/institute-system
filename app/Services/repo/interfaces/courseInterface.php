@@ -17,5 +17,6 @@ interface courseInterface{
 
     public function newestWorkshops();
     public function newestCourses();
+    public function ProgressOfCourse($request);
     
 }

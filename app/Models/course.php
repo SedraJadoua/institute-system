@@ -17,6 +17,7 @@ class course extends Model implements HasMedia
 use HasFactory , HasUuids  , InteractsWithMedia;
     
     protected $fillable = ['name' , 'description' , 'workshop'];
+    protected $hidden  = ['created_at' , 'updated_at' ];
 
 
     protected function getNameAttribute($value){ 
@@ -59,6 +60,12 @@ use HasFactory , HasUuids  , InteractsWithMedia;
     public function tasks(): HasManyThrough
     {
         return $this->hasManyThrough(task::class, teacherCourse::class , 'course_id' , 'course_teacher_id' , 'id' , 'id');
+    }
+
+
+    public function courseTeacherStudent(): HasManyThrough
+    {
+        return $this->hasManyThrough(courseTeacherStudent::class, teacherCourse::class , 'course_id' , 'course_teacher_id');
     }
 
     /**

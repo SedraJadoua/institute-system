@@ -17,6 +17,7 @@ return new class extends Migration
             $table->json('first_name');
             $table->json('last_name');
             $table->string('phoneNumber');
+            $table->string('photo')->nullable();
             $table->string('password');
             $table->string('user_name');
             $table->uuid('speciality_id')->nullable();

@@ -11,6 +11,7 @@ interface teacherInterface {
     public function update(updateRequest $request ,string $id);
     public function show(string $id);
     public function destroy(string $id);
+    public function addPhoto(Request $request , string $id);
 
     public function restore($id);
     public function restoreAll();
