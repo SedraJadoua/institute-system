@@ -18,5 +18,7 @@ return [
     'throttled' => 'Please wait before retrying.',
     'token' => 'This password reset token is invalid.',
     'user' => "We can't find a user with that email address.",
-
+    'code_is_valid' => 'code is valid,please input the new password',
+    'code_is_expire' => 'Sorry , but code is expire',
+    'password_has_been_successfully_reset' => 'password has been successfully reset'
 ];

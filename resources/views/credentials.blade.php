@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <div>  you can login to our application with userName 
-        <span style="text-decoration: underline;">{{$userName}} </span>
-        and password 
-        <span style="text-decoration: underline;">{{$password}} </span>
-           </div>
-    <h6>    do not share this information with anybody     </h6>
-</body>
-</html>
+@component('mail::message')
+<h1>We are happy to have you join our family</h1>
+<p> you can login to our application with </p>
+
+@component('mail::panel')
+userName: {{ $userName }} and password: {{ $password}}
+@endcomponent
+
+<p>do not share this information with anybody</p>
+@endcomponent

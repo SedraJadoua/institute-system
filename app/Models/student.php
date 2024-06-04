@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,12 +10,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Lang;
 use Laravel\Passport\HasApiTokens;
 
 class student extends Authenticatable
 {
-    use HasFactory , HasUuids , HasApiTokens , SoftDeletes;
+    use HasFactory , HasUuids , HasApiTokens, Notifiable , CanResetPassword, SoftDeletes;
 
     protected $hidden = ['pivot' , 'deleted_at' , 'created_at' , 'updated_at', 'password'];
     protected $fillable = ['email' , 'photo' ];

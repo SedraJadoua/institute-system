@@ -10,9 +10,15 @@ use App\Http\Controllers\studentController;
 use App\Http\Controllers\taskController;
 use App\Http\Controllers\taskStudentController;
 use App\Http\Controllers\teacherController;
+use App\Models\student;
 use App\Models\taskStudent;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +40,9 @@ Route::prefix('auth')->controller(auth::class)->group(function(){
        Route::post('studentRegister', 'studentRegister');
        Route::post('teacherRegister', 'teacherRegister');
        Route::post('loginAdmin', 'loginAdmin');
-       Route::post('login', 'login');
+       Route::post('login', 'login')->name('login');
+       Route::post('forgot-password-student' , 'forgotPassword');
+       Route::post('change-password', 'changePassword');
 });
 Route::prefix('course')->controller(courseController::class)->group(function(){
        Route::get('/NewestWorkshops', 'newestWorkshop');

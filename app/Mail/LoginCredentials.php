@@ -21,37 +21,8 @@ class LoginCredentials extends Mailable
         $this->userName = $userName;
         $this->password = $password;
     }
-
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Login Credentials',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'credentials' ,with: [
-             'userName' => $this->userName,
-             'password' => $this->password
-             ]
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        return $this->markdown('credentials');
     }
 }

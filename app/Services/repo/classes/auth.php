@@ -4,16 +4,23 @@
 namespace App\Services\repo\classes;
 
 use App\Http\Requests\auth\adminLogin;
+use App\Http\Requests\auth\codeCheckRequest;
 use App\Http\Requests\auth\login;
+use App\Http\Requests\auth\student\changePasswordRequest;
+use App\Http\Requests\auth\student\forgotPasswordRequest;
 use App\Http\Requests\auth\studentRegister;
 use App\Http\Requests\auth\teacherRegister;
 use App\Mail\LoginCredentials;
+use App\Mail\SendCodeResetPassword;
+use App\Models\PasswordResetToken;
 use App\Models\student;
 use App\Models\teacher;
 use App\Services\repo\interfaces\authInterface;
 use App\Trait\ResponseJson;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\Token;
 
 class auth implements authInterface{
@@ -102,7 +109,9 @@ class auth implements authInterface{
             Token::where('user_id', $teacher->id)->delete();
             $teacher->token = $teacher->createToken('TeacherToken')->accessToken;
             return $this->sendResponse($teacher, __('auth.Login_Teacher'));
-           }
+           }else {
+            return $this->returnError(trans('validation.current_password'));
+          }
         }
 
         else if(!$teacher){
@@ -112,12 +121,55 @@ class auth implements authInterface{
               Token::where('user_id' , $student->id)->delete();
               $student->token = $student->createToken('StudentToken')->accessToken;
               return $this->sendResponse($student, __('auth.Login_Student'));
+            }else {
+              return $this->returnError(trans('validation.current_password'));
             }
           }
         }
         return $this->returnError(__('auth.error'));
    }
 
+   
+   public function forgotPassword(forgotPasswordRequest $request)
+   {
+   
+    PasswordResetToken::where('email', $request->email)->delete();
+    $data['email'] = $request->email;
+    $data['code'] = mt_rand(100000, 999999);
+    $data['created_at'] = now();
+    $codeData = PasswordResetToken::create($data);
+    Mail::to($request->email)->send(new SendCodeResetPassword($codeData->code));
 
+     return $this->sendResponse($data , trans('passwords.sent'));
+         
+   }
+  
+   
+  public function changePassword(changePasswordRequest $request)
+  {
+    $passwordReset = PasswordResetToken::firstWhere('code', $request->code);
+    if(!$passwordReset){
+     return $this->returnError( trans('passwords.code_is_valid'));
+    }
+    if ($passwordReset->created_at > now()->addHour()) {
+        return $this->returnError(trans('passwords.code_is_expire'), 422);
+    }
+    
+    $student = student::firstWhere('email', $passwordReset->email);
+    if($student){
+      $student->password = Hash::make($request->password);
+      $student->save();
+    }
+    else {
+      $teacher = teacher::firstWhere('email', $passwordReset->email);
+      if($teacher) {
+        $teacher->password = Hash::make($request->password);
+        $teacher->save();
+      }
+    }
+    PasswordResetToken::where('code', $passwordReset->code)->delete();
+
+    return $this->sendResponse($student, trans('passwords.password_has_been_successfully_reset'));  
+  }
 
 }
