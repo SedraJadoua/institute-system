@@ -12,12 +12,45 @@ use Illuminate\Support\Facades\Lang;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+/**
+ * 
+ *
+ * @property string $id
+ * @property int $workshop
+ * @property string $name
+ * @property string $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\teacherCourse> $courseTeacher
+ * @property-read int|null $course_teacher_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\courseTeacherStudent> $courseTeacherStudent
+ * @property-read int|null $course_teacher_student_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\daysSystem> $daysSystem
+ * @property-read int|null $days_system_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read int|null $media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\task> $tasks
+ * @property-read int|null $tasks_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\teacher> $teachers
+ * @property-read int|null $teachers_count
+ * @method static \Database\Factories\courseFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|course newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|course newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|course query()
+ * @method static \Illuminate\Database\Eloquent\Builder|course whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course whereWorkshop($value)
+ * @mixin \Eloquent
+ */
 class course extends Model implements HasMedia
 {
 use HasFactory , HasUuids  , InteractsWithMedia;
     
     protected $fillable = ['name' , 'description' , 'workshop'];
-    protected $hidden  = ['created_at' , 'updated_at' ];
+    protected $hidden  = ['created_at' , 'updated_at'  ];
 
 
     protected function getNameAttribute($value){ 
@@ -38,7 +71,7 @@ use HasFactory , HasUuids  , InteractsWithMedia;
     public function teachers(): BelongsToMany
     {
         return $this->belongsToMany(teacher::class, 'course_teacher', 'course_id', 'teacher_id')
-        ->withPivot(['level' , 'total_cost' , 'total_days', 'updated_at' , 'created_at' ]);
+        ->withPivot(['id', 'level' , 'total_cost' , 'total_days', 'updated_at' , 'created_at' ]);
     }
 
     /**
@@ -77,7 +110,4 @@ use HasFactory , HasUuids  , InteractsWithMedia;
     {
         return $this->hasMany(teacherCourse::class, 'course_id');
     }
-
-  
-
 }

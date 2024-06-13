@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\group;
 use App\Models\student;
+use App\Models\teacher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ class memberFactory extends Factory
         return [
             'group_id' => group::factory(),
             'student_id' => student::factory(),
+            'teacher_id' => teacher::factory(),
         ];
     }
 }

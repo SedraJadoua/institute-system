@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->float('size');
-            $table->json('description');
+            $table->bigInteger('size');
+            $table->json('description')->nullable();
             $table->uuid('session_id')->nullable();
             $table->foreign('session_id')->references('id')->on('sessions')->nullOnDelete();
             $table->timestamps();

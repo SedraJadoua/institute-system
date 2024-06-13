@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('student_id');
+            $table->uuid('student_id')->nullable();
+            $table->uuid('teacher_id')->nullable();
             $table->uuid('group_id');
             $table->foreign('student_id')->references('id')->on('students')->cascadeOnDelete();
+            $table->foreign('teacher_id')->references('id')->on('teachers')->cascadeOnDelete();
             $table->foreign('group_id')->references('id')->on('groups')->cascadeOnDelete();
             $table->unique([
                 'student_id',
+                'teacher_id',
                 'group_id',
             ]);
             $table->timestamps();

@@ -9,6 +9,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Lang;
 
+/**
+ * 
+ *
+ * @property string $id
+ * @property string $specialty_name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\teacherCourse> $courseTeacher
+ * @property-read int|null $course_teacher_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\teacher> $teachers
+ * @property-read int|null $teachers_count
+ * @method static \Database\Factories\specialtyFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|specialty newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|specialty newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|specialty query()
+ * @method static \Illuminate\Database\Eloquent\Builder|specialty whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|specialty whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|specialty whereSpecialtyName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|specialty whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class specialty extends Model
 {
     use HasFactory, HasUuids;

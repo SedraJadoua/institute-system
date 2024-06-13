@@ -56,4 +56,10 @@ class taskStudentController extends Controller
     {
         //
     }
+
+
+    public function getStudentInCourse(string $id)
+    {
+        return $this->taskStudent->getStudentInCourse($id);
+    }
 }

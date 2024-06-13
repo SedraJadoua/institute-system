@@ -15,8 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->float('cost');
             $table->date('date');
-            $table->uuid('teacher_course_student_id');
-            $table->foreign('teacher_course_student_id')->references('id')->on('course_teacher_student')->noActionOnDelete();
+            $table->uuid('teacher_course_student_id')->nullable();
+            $table->foreign('teacher_course_student_id')->references('id')->on('course_teacher_student')->nullOnDelete();
             $table->string('payment_method');
             $table->json('transaction_data');
             $table->unsignedBigInteger('payment_id');

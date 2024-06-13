@@ -19,8 +19,8 @@ class classroomFactory extends Factory
     public function definition(): array
     {
         $name = json_encode([
-             'ar' =>fake('ar_SA')->domainName(),
-             'en' => fake()->domainName(),
+             'name_ar' =>fake('ar_SA')->domainName(),
+             'name_en' => fake()->domainName(),
         ]);
         return [
             'name' => $name, 

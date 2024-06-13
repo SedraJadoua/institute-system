@@ -2,16 +2,23 @@
 
 return [
    'insert_course' => 'Course Inserted successfully', 
+   'insert_classroom' => 'Classroom Inserted successfully', 
    'insert_session' => 'Session Inserted successfully', 
+   'insert_file' => 'File Inserted successfully', 
    'insert_photo' => 'Photo inserted successfully', 
+   'insert_message' => 'Message sent successfully', 
    'insert_specialty' => 'Specialty Inserted successfully', 
+   'insert_task' => 'Task Inserted successfully', 
    'photo_add' => 'photo added successfully' ,
    'error_course_not_found' => 'Sorry, a course does not exists recently',
+   'error_file_not_found' => 'Sorry, a file does not exists recently',
    'error_teacher_not_found' => 'Sorry, a teacher does not exists recently',
    'error_student_not_found' => 'Sorry, a student does not exists recently',
    'error_session_not_found' => 'Sorry, a session does not exists recently',
    'error_specialty_not_found' => 'Sorry, a specialty does not exists recently',
    'error_photo_not_found' => 'Sorry, a photo does not exists recently',
+   'error_group_not_found' => 'Sorry, a group does not exists recently',
+   'error_member_not_found' => 'a User does not exists recently',
    'delete' => 'Deleted successfully', 
    'delete_photo' => 'Deleted photo successfully', 
    'update' => 'Updated successfully', 
@@ -20,5 +27,5 @@ return [
    'restore_All_teacher' => 'All teachers restored successfully.', 
    'restore_All_student' => 'All students restored successfully.', 
    'restore_teacher' => 'teacher restored successfully.', 
-
+   'file_is_large' => 'file is large , must be smallest 30M'
 ];

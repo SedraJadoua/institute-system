@@ -4,12 +4,8 @@ namespace App\Services\repo\classes;
 
 use App\Http\Requests\specialty\storeRequest;
 use App\Models\specialty;
-use App\Rules\arabicLanguage;
-use App\Rules\englishLanguage;
-use App\Rules\uniqueJsonContent;
 use App\Services\repo\interfaces\specialtInterface;
 use App\Trait\ResponseJson;
-use Illuminate\Support\Facades\Request;
 
 class specialtyClass implements specialtInterface {
      
@@ -32,12 +28,11 @@ class specialtyClass implements specialtInterface {
 
     public function show(string $id){
         try {
-            $specialty = specialty::with(['teachers'])->findOrFail($id);
+            $specialty = specialty::with(['teachers' , 'courseTeacher.course'])->findOrFail($id);
             return $specialty;
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return $this->returnError(__('strings.error_specialty_not_found'));
         }
     }
-
 
 }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('evaluations', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->integer('rate');
+            $table->text('feedback')->nullable();
             $table->uuid('student_id');
             $table->foreign('student_id')->references('id')->on('students')->cascadeOnDelete();
             $table->uuid('course_teacher_id');

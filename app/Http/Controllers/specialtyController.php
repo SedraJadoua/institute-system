@@ -37,6 +37,8 @@ class specialtyController extends Controller
         return $this->specialty->show($id);
     }
 
+   
+
     /**
      * Update the specified resource in storage.
      */

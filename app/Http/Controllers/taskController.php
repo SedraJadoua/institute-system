@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\task\indexRequest;
+use App\Http\Requests\task\storeRequest;
 use App\Services\repo\interfaces\taskInterface;
-use App\Services\repo\interfaces\taskStudentInterface;
-use Illuminate\Http\Request;
+use App\Trait\ResponseJson;
 
 class taskController extends Controller
 {
-
+   use ResponseJson;
    protected $task;
 
    public function __construct(taskInterface $task)
@@ -28,9 +27,10 @@ class taskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(storeRequest $request)
     {
-        //
+      $task =  $this->task->store($request);
+      return $this->returnSuccessMessage(trans('strings.insert_task') ,$task );
     }
 
     /**
@@ -44,9 +44,10 @@ class taskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(storeRequest $request, string $id)
     {
-        //
+        $task = $this->task->update($request , $id);
+        return $this->returnSuccessMessage(trans('strings.update') , $task);
     }
 
     /**

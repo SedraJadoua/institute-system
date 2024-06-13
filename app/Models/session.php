@@ -10,6 +10,34 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Lang;
 
+/**
+ * 
+ *
+ * @property string $id
+ * @property string $title
+ * @property string $date
+ * @property string $course_teacher_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\attendance> $attendances
+ * @property-read int|null $attendances_count
+ * @property-read \App\Models\teacherCourse $courseTeacher
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\file> $files
+ * @property-read int|null $files_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\student> $students
+ * @property-read int|null $students_count
+ * @method static \Database\Factories\sessionFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|session newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|session newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|session query()
+ * @method static \Illuminate\Database\Eloquent\Builder|session whereCourseTeacherId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|session whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|session whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|session whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|session whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|session whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class session extends Model
 {
     use HasFactory , HasUuids;

@@ -2,13 +2,11 @@
 
 namespace App\Services\repo\interfaces;
 
-use App\Http\Requests\course\storeRequest;
-use App\Http\Requests\course\updateRequest;
-use Illuminate\Support\Facades\Request;
+use App\Http\Requests\classroom\storeRequest ;
 
 interface classroomInterface{
 
     public function index(); 
-
+    public function store(storeRequest $request);
     
 }

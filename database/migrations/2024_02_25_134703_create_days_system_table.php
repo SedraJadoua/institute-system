@@ -16,6 +16,7 @@ return new class extends Migration
             $table->json('name');
             $table->boolean('flag')->nullable();
             $table->time('clock')->nullable();
+            $table->time('end_clock')->nullable();
             $table->uuid('classroom_id')->nullable();
             $table->uuid('teacher_course_id');
             $table->foreign('teacher_course_id')->references('id')->on('course_teacher')->cascadeOnDelete();

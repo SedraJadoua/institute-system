@@ -11,9 +11,12 @@
         "laravel/passport": "^11.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "spatie/laravel-medialibrary": "^10.15"
+        "pusher/pusher-php-server": "^7.2",
+        "spatie/laravel-medialibrary": "^10.15",
+        "srmklive/paypal": "^3.0"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.0",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",

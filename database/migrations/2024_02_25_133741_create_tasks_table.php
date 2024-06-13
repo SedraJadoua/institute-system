@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->json('name');
             $table->integer('mark');
-            $table->timestamp('date');
+            $table->dateTime('date');
             $table->uuid('course_teacher_id');
             $table->foreign('course_teacher_id')->references('id')->on('course_teacher')->cascadeOnDelete();
             $table->timestamps();

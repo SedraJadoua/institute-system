@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('course_id')->references('id')->on('courses')->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('total_days');
             $table->enum('level', ['0' , '1' , '2' , '3']);
-            $table->float('total_cost');
+            $table->double('total_cost');
             $table->timestamps();
         });
     }

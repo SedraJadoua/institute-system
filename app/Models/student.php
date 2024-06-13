@@ -14,6 +14,60 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Lang;
 use Laravel\Passport\HasApiTokens;
 
+/**
+ * 
+ *
+ * @property string $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $user_name
+ * @property string $phoneNumber
+ * @property int $age
+ * @property string $email
+ * @property string $password
+ * @property int $gender
+ * @property string|null $photo
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\attendance> $attendances
+ * @property-read int|null $attendances_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Passport\Client> $clients
+ * @property-read int|null $clients_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\teacherCourse> $courseTeacher
+ * @property-read int|null $course_teacher_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\member> $members
+ * @property-read int|null $members_count
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\session> $sessions
+ * @property-read int|null $sessions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\taskStudent> $taskStudent
+ * @property-read int|null $task_student_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Passport\Token> $tokens
+ * @property-read int|null $tokens_count
+ * @method static \Database\Factories\studentFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|student newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|student newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|student onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|student query()
+ * @method static \Illuminate\Database\Eloquent\Builder|student whereAge($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student whereGender($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student wherePhoneNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student wherePhoto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student whereUserName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|student withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|student withoutTrashed()
+ * @mixin \Eloquent
+ */
 class student extends Authenticatable
 {
     use HasFactory , HasUuids , HasApiTokens, Notifiable , CanResetPassword, SoftDeletes;

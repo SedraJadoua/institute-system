@@ -5,6 +5,8 @@ namespace App\Services\repo\classes;
 use App\Http\Requests\course\storeRequest;
 use App\Http\Requests\course\updateRequest;
 use App\Models\course;
+use App\Models\group;
+use App\Models\member;
 use App\Models\session;
 use App\Models\student;
 use App\Services\repo\interfaces\courseInterface;
@@ -66,35 +68,38 @@ class courseClass implements courseInterface
             ->each(function ($fileAdder) {
                 $fileAdder->toMediaCollection('photos');
             });
-
-        if (is_array($request->teacher_id)) {
             foreach ($request->teacher_id  as $teacher_id) {
-                $course->teachers()->attach($teacher_id, [
-                    'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+               $courseTeacherId = \Ramsey\Uuid\Uuid::uuid4()->toString();
+               $course->teachers()->attach($teacher_id, [
+                    'id' => $courseTeacherId,
                     'level' => $request->level,
                     'total_cost' => $request->total_cost,
                     'total_days' => $request->total_days,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
+                $group[] = group::Create([
+                    'name' => json_encode([
+                       'ar' => $request->name_ar,
+                       'en' => $request->name_en,
+                    ]),
+                    'teacher_course_id' =>$courseTeacherId,
+                ]); 
             }
-        } else {
-            $course->teachers()->attach($request->teacher_id, [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'level' => $request->level,
-                'total_cost' => $request->total_cost,
-                'total_days' => $request->total_days,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+              for ($i=0;$i<count($request->teacher_id);$i++) { 
+                member::Create([
+                    'teacher_id' => $request->teacher_id[$i],
+                    'group_id' => $group[$i]->id,
+                ]);   
+              }  
+                         
+          
         return  $course::where('id', $course->id)
-        ->with(['media'])
+        ->with(['media' , 'courseTeacher.group.members'])
         ->get()
          ->each(function ($course) {
          $course->setRelation('media', $course->media->map->only(['uuid' , 'original_url']));
          });
-        
     }
 
 

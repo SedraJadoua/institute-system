@@ -53,8 +53,4 @@ class sessionController extends Controller
     {
         //
     }
-
-    public function ees (Request $request){
-        return $request;
-    }
 }

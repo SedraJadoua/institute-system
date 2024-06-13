@@ -16,7 +16,7 @@ class sessionClass implements sessionInterface {
     use ResponseJson;
     
     public function index(){
-       return session::with(['courseTeacher' , 'students.attendances'])->get();
+       return session::with(['courseTeacher.daysSystem.classroom' , 'students.attendances'])->get();
     }
 
 

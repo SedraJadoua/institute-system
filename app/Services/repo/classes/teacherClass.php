@@ -20,7 +20,7 @@ class teacherClass implements teacherInterface {
 
     public function show(string $id){
         try {
-            $teacher = teacher::with(['specialty'])->findOrFail($id);
+            $teacher = teacher::with(['specialty' , 'courses'])->findOrFail($id);
             return $teacher->makeHidden('deleted_at');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
 
@@ -56,7 +56,7 @@ class teacherClass implements teacherInterface {
             $photo->move(public_path('storage/images/'),$photoName);
            
             return $this->returnSuccessMessage(trans('strings.photo_add'), $teacher);
-     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+     }   catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
          return $this->returnError(('strings.error_teacher_not_found'));
      }
 }
