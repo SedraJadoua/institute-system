@@ -1,8 +1,5 @@
 <?php
 
-use App\Events\sendMessage;
-use App\Http\Controllers\paymentController;
-use App\Models\course;
 use Illuminate\Support\Facades\Route;
 
 /*

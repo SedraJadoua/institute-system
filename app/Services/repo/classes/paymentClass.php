@@ -48,10 +48,10 @@ class paymentClass implements paymentInterface {
             ->where('student_id' , auth()->user()->id)
             ->first();
             $response = $this->gateway->purchase(array(
-                'amount' => '20000',
+                'amount' => $request->post('amount'),
                 'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => route('success' , ['course_teacher_student'=> '9c497122-26af-48dd-a6a9-3a74caed9112']),
-                'cancelUrl' => route('payError' , ['course_teacher_student'=> '9c497122-26af-48dd-a6a9-3a74caed9112']),
+                'returnUrl' => route('success' , ['course_teacher_student'=> $courseTeacherStudent]),
+                'cancelUrl' => route('payError'),
             ))->send();
            
             if ($response->isRedirect()) {
