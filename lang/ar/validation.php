@@ -115,7 +115,7 @@ return [
     'multiple_of' => 'The :attribute field must be a multiple of :value.',
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute field format is invalid.',
-    'numeric' => 'The :attribute field must be a number.',
+    'numeric' => 'حقل :attribute يجب أن يكون رقما',
     'required' => 'حقل :attribute مطلوب',
     'password' => [
         'letters' => 'The :attribute field must contain at least one letter.',
@@ -215,6 +215,7 @@ return [
         'workshop' => 'الورشة',
         'code' => 'الرمز',
         'gender' => 'الجنس',
+        'amount' => 'المبلغ',
         'photo' => 'الصور',
         'message' => 'الرسالة',
         'file' => 'الملف',

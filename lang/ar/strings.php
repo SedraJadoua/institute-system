@@ -31,4 +31,7 @@ return [
    'restore_All_student' => 'تم استعادة جميع الطلاب بنجاح',
    'restore_teacher' => 'تم استعادة المعلم بنجاح',
    'file_is_large' => 'حجم الملف كبير , يجب أن يكون أقل من M30',
+   'User_cancelled_the_payment' => 'ألغى المستخدم الدفعة.',
+   'transaction_is_declined' => 'تم رفض المعاملة',
+   'payment_successfully' => 'تم الدفع بنجاح. رقم المعاملة الخاص بك هو:'
 ]; 

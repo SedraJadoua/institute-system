@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\sendMessage;
 use App\Http\Controllers\attendanceController;
 use App\Http\Controllers\auth;
 use App\Http\Controllers\classroomController;
@@ -8,6 +7,7 @@ use App\Http\Controllers\courseController;
 use App\Http\Controllers\fileController;
 use App\Http\Controllers\imageController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\paymentController;
 use App\Http\Controllers\sessionController;
 use App\Http\Controllers\specialtyController;
 use App\Http\Controllers\studentController;
@@ -60,6 +60,14 @@ Route::prefix('session')
 ->controller(sessionController::class)
 ->group(function(){
        Route::post('/restore/{id}', 'restore');
+});
+
+Route::prefix('payment')
+->controller(paymentController::class)
+->group(function(){
+       Route::post('/charge', 'charge')->middleware('auth:student');
+       Route::get('/success', 'success')->name('success');
+       Route::get('/payError', 'payError')->name('payError');
 });
 Route::prefix('student')
 ->controller(studentController::class)

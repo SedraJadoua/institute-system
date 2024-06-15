@@ -11,9 +11,10 @@
         "laravel/passport": "^11.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "league/omnipay": "^3.2",
+        "omnipay/paypal": "^3.0",
         "pusher/pusher-php-server": "^7.2",
-        "spatie/laravel-medialibrary": "^10.15",
-        "srmklive/paypal": "^3.0"
+        "spatie/laravel-medialibrary": "^10.15"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",

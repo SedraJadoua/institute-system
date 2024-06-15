@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\sendMessage;
+use App\Http\Controllers\paymentController;
 use App\Models\course;
 use Illuminate\Support\Facades\Route;
 
@@ -19,11 +20,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('data' , function(){
-     return view('index');
-});
-
-Route::get('/push' , function (){
-  broadcast(new sendMessage('sedra is hereeeee'))->toOthers();
-  return 'success';
-});

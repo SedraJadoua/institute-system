@@ -27,5 +27,8 @@ return [
    'restore_All_teacher' => 'All teachers restored successfully.', 
    'restore_All_student' => 'All students restored successfully.', 
    'restore_teacher' => 'teacher restored successfully.', 
-   'file_is_large' => 'file is large , must be smallest 30M'
+   'file_is_large' => 'file is large , must be smallest 30M',
+   'User_cancelled_the_payment' => 'User cancelled the payment',
+   'transaction_is_declined' => 'Transaction is declined',
+   'payment_successfully'  => 'Payment is successful. Your transaction id is:'
 ];
