@@ -12,6 +12,7 @@ return [
    'insert_specialty' => 'تم إدراج التخصص بنجاح', 
    'insert_task' => 'تم إدراج المهمة بنجاح', 
    'photo_add' => 'تم اضافة الصورة بنجاح' ,
+   'insert_daysSystem' => 'تم إدراج نظام الدوام بنجاح' ,
    'delete' => 'تم الحذف بنجاح', 
    'delete_photo' => 'تم حذف الصورة بنجاح', 
    'error_course_not_found' => 'عذرا ، الدورة التدريبية غير موجودة مؤخرا', 

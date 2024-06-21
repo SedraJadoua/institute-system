@@ -15,7 +15,7 @@ return [
     'accepted' => 'The :attribute field must be accepted.',
     'accepted_if' => 'The :attribute field must be accepted when :other is :value.',
     'active_url' => 'The :attribute field must be a valid URL.',
-    'after' => 'The :attribute field must be a date after :date.',
+    'after' => 'حقل :attribute يجب أن يكون تاريخا بعد :date',
     'after_or_equal' => 'The :attribute field must be a date after or equal to :date.',
     'alpha' => 'The :attribute field must only contain letters.',
     'alpha_dash' => 'The :attribute field must only contain letters, numbers, dashes, and underscores.',
@@ -145,9 +145,9 @@ return [
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_if_accepted' => 'The :attribute field is required when :other is accepted.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
-    'required_with' => 'The :attribute field is required when :values is present.',
+    'required_with' => 'حقل :attribute مطلوب عندما حقل :values موجود',
     'required_with_all' => 'The :attribute field is required when :values are present.',
-    'required_without' => 'The :attribute field is required when :values is not present.',
+    'required_without' => 'حقل :attribute مطلوب عندما حقل :values غير موجود.',
     'required_without_all' => 'The :attribute field is required when none of :values are present.',
     'same' => 'The :attribute field must match :other.',
     'size' => [
@@ -234,6 +234,8 @@ return [
         'teacher_id' => 'الأستاذ',
         'date' => 'التاريخ',
         'mark' => 'العلامة',
+        'start_time' => 'وقت البداية',
+        'end_time' => 'وقت النهاية',
 
 
     ],

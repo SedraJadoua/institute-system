@@ -4,6 +4,7 @@ use App\Http\Controllers\attendanceController;
 use App\Http\Controllers\auth;
 use App\Http\Controllers\classroomController;
 use App\Http\Controllers\courseController;
+use App\Http\Controllers\daysSystemController;
 use App\Http\Controllers\fileController;
 use App\Http\Controllers\imageController;
 use App\Http\Controllers\MessageController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\taskController;
 use App\Http\Controllers\taskStudentController;
 use App\Http\Controllers\teacherController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -103,8 +105,12 @@ Route::prefix('taskStudent')
        Route::get('/getStudentInCourse/{coureId}', 'getStudentInCourse');
 });
 
+Route::post('/ar', function (){
+       Artisan::call('classroom:update-status');
+});
 
 Route::resource('/course', courseController::class);
+Route::resource('/days_system', daysSystemController::class);
 Route::resource('/file', fileController::class);
 Route::resource('/classRoom', classroomController::class);
 Route::resource('/session', sessionController::class);

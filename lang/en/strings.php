@@ -9,6 +9,7 @@ return [
    'insert_message' => 'Message sent successfully', 
    'insert_specialty' => 'Specialty Inserted successfully', 
    'insert_task' => 'Task Inserted successfully', 
+   'insert_daysSystem' => 'Days System Inserted successfully', 
    'photo_add' => 'photo added successfully' ,
    'error_course_not_found' => 'Sorry, a course does not exists recently',
    'error_file_not_found' => 'Sorry, a file does not exists recently',

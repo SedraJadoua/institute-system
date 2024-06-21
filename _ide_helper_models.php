@@ -210,6 +210,14 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereTeacherCourseId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $work_day
+ * @property string|null $day_workshop
+ * @property string $start_time
+ * @property string $end_time
+ * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereDayWorkshop($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereEndTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereStartTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereWorkDay($value)
  */
 	class daysSystem extends \Eloquent {}
 }
@@ -377,6 +385,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|payment whereTransactionData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|payment whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property float $amount
+ * @method static \Illuminate\Database\Eloquent\Builder|payment whereAmount($value)
  */
 	class payment extends \Eloquent {}
 }

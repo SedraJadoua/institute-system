@@ -43,12 +43,12 @@ class daysSystem extends Model
     use HasFactory , HasUuids;
     
     protected $table = 'days_system';
+    protected $fillable = ['work_day', 'day_workshop' , 'start_time' , 'end_time' , 'teacher_course_id' , 'classroom_id'];
 
-
-    public function getNameAttribute($value)
+    public function getDayWorkshopAttribute($value)
     {
-        $name = json_decode($value , true);
-        return $name[Lang::getLocale()];
+        $dayWorkshop = json_decode($value , true);
+        return $dayWorkshop[Lang::getLocale()];
     }
     /**
      * Get the classroom that owns the daysSystem

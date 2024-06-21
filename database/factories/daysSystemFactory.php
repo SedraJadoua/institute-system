@@ -20,12 +20,15 @@ class daysSystemFactory extends Factory
     public function definition(): array
     {
         
-        $name = json_encode([
+        $day_workshop = json_encode([
             'ar' => fake('ar_SA')->dayOfWeek(),
             'en' => fake()->dayOfWeek()
         ]);
         return [
-            'name' => $name, 
+            'day_workshop' => $day_workshop,
+            'work_day' =>fake()->randomElement(['0' , '1', '2']), 
+            'start_time' => fake()->time(),
+            'end_time' => fake()->time(),
             'classroom_id' => classroom::factory(),
             'teacher_course_id' => teacherCourse::factory(),
         ];
