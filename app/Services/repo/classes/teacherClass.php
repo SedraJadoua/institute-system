@@ -37,6 +37,7 @@ class teacherClass implements teacherInterface {
             $teacher->last_name = json_encode(['ar' => $request->last_name_ar, 'en' => $request->last_name_en]);
             $teacher->phoneNumber = $request->phoneNumber;  
             $teacher->speciality_id = $request->speciality_id;
+            $teacher->description =  json_encode(['ar' => $request->description_ar, 'en' => $request->description_en]);
             $teacher->save();
             return $this->returnSuccessMessage(__('strings.update'), $teacher);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {

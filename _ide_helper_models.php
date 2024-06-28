@@ -149,6 +149,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|course whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|course whereWorkshop($value)
  * @mixin \Eloquent
+ * @property string|null $specialty_id
+ * @method static \Illuminate\Database\Eloquent\Builder|course whereSpecialtyId($value)
  */
 	class course extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
 }
@@ -212,8 +214,10 @@ namespace App\Models{
  * @mixin \Eloquent
  * @property string|null $work_day
  * @property string|null $day_workshop
+ * @property string $date
  * @property string $start_time
  * @property string $end_time
+ * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereDayWorkshop($value)
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereEndTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereStartTime($value)
@@ -611,6 +615,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|teacher withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|teacher withoutTrashed()
  * @mixin \Eloquent
+ * @property string|null $description
+ * @method static \Illuminate\Database\Eloquent\Builder|teacher whereDescription($value)
  */
 	class teacher extends \Eloquent {}
 }
@@ -653,6 +659,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereTotalDays($value)
  * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\evaluation> $evaluation
+ * @property-read int|null $evaluation_count
  */
 	class teacherCourse extends \Eloquent {}
 }

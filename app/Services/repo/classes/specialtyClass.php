@@ -12,7 +12,7 @@ class specialtyClass implements specialtInterface {
     use ResponseJson;
     
     public function index(){
-        return specialty::with(['courseTeacher.course'])->get();
+        return specialty::all();
     }
 
     public function store(storeRequest $request)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\course\openCourse;
 use App\Http\Requests\course\storeRequest;
 use App\Http\Requests\course\updateRequest;
 use App\Services\repo\interfaces\courseInterface;
@@ -35,9 +36,15 @@ class courseController extends Controller
     }
 
 
-    public function ProgressOfCourse(Request $request)
+    public function progressOfCourse()
     {
-        return $this->course->ProgressOfCourse($request);
+        return $this->course->progressOfCourse();
+    }
+
+
+    public function openNewCourse(openCourse $request)
+    {
+        return $this->course->openNewCourse($request);
     }
 
     /**

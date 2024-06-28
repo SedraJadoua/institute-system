@@ -16,7 +16,7 @@ return [
     'accepted_if' => 'The :attribute field must be accepted when :other is :value.',
     'active_url' => 'The :attribute field must be a valid URL.',
     'after' => 'حقل :attribute يجب أن يكون تاريخا بعد :date',
-    'after_or_equal' => 'The :attribute field must be a date after or equal to :date.',
+    'after_or_equal' => 'حقل :attribute  يجب أن يكون تاريخًا بعد أو يساوي :date.',
     'alpha' => 'The :attribute field must only contain letters.',
     'alpha_dash' => 'The :attribute field must only contain letters, numbers, dashes, and underscores.',
     'alpha_num' => 'The :attribute field must only contain letters and numbers.',
@@ -166,6 +166,8 @@ return [
     'url' => 'The :attribute field must be a valid URL.',
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
+    'only_one' => 'حقل work day أو day workshop مطلوب ليس كلاهما .',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -218,6 +220,7 @@ return [
         'amount' => 'المبلغ',
         'photo' => 'الصور',
         'message' => 'الرسالة',
+        'today' => 'اليوم',
         'file' => 'الملف',
         'name_file' => 'اسم الملف',
         'session_id' => 'رقم الجلسة',

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('course_teacher_id')->references('id')->on('course_teacher')->cascadeOnDelete()->cascadeOnUpdate();
             $table->uuid('student_id');
             $table->foreign('student_id')->references('id')->on('students')->noActionOnDelete()->cascadeOnUpdate();
+            $table->unique(['student_id' , 'course_teacher_id']);
             $table->timestamps();
         });
     }

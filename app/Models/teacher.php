@@ -66,7 +66,7 @@ class teacher extends Authenticatable
 {
     use HasFactory , HasUuids , HasApiTokens , SoftDeletes;
 
-    protected $fillable = ['speciality_id' , 'is_admin' , 'photo'];
+    protected $fillable = ['speciality_id' , 'is_admin' , 'photo' , 'description'];
 
     protected $hidden = [ 'is_admin'  ,'deleted_at' , 'created_at' , 'updated_at', 'password'];
 
@@ -74,6 +74,13 @@ class teacher extends Authenticatable
     protected function getFirstNameAttribute($value){
         $first_name = json_decode($value , true);
         return $first_name[Lang::getLocale()];
+    }
+
+    protected function getDescriptionAttribute($value){
+        if(is_null($value))
+          return ;
+        $desc = json_decode($value , true);
+        return $desc[Lang::getLocale()];
     }
 
     protected function getLastNameAttribute($value){

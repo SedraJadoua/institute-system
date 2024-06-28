@@ -3,6 +3,7 @@
 return [
    
    'insert_course' => 'تم إدراج الدورة بنجاح', 
+   'open_course' => 'تم فتح الدورة بنجاح', 
    'insert_classroom' => 'تم إدراج القاعة بنجاح', 
    'insert_session' => 'تم إدراج الجلسة بنجاح', 
    'insert_file' => 'تم إدراج الملف بنجاح', 
@@ -17,10 +18,12 @@ return [
    'delete_photo' => 'تم حذف الصورة بنجاح', 
    'error_course_not_found' => 'عذرا ، الدورة التدريبية غير موجودة مؤخرا', 
    'error_teacher_not_found' => 'عذرا ، المعلم غير موجود مؤخرا',
+   'some_thing_went_wrong' => 'هناك شئ خاطئ، يرجى المحاولة فى وقت لاحق',
    'error_student_not_found' => 'عذرا ، الطالب غير موجود مؤخرا',
    'error_group_not_found' => 'عذرا، المجموعة غير موجود مؤخرا',
    'error_session_not_found' => 'عذرا ، الجلسة غير موجودة مؤخرا',
    'error_photo_not_found' => 'عذرا ، الصورة غير موجودة مؤخرا',
+   'error_classroom_not_found' => 'عذرا ، القاعة غير موجودة مؤخرا',
    'error_member_not_found' => 'هذا المستخدم غير موجود مؤخرا',
    'error_file_not_found' => 'عذرا ، الملف غير موجود مؤخرا',
    'error_specialty_not_found' => 'عذرا ، التخصص غير موجودة مؤخرا',

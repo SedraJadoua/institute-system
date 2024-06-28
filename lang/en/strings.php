@@ -2,6 +2,7 @@
 
 return [
    'insert_course' => 'Course Inserted successfully', 
+   'open_course' => 'Course opened successfully', 
    'insert_classroom' => 'Classroom Inserted successfully', 
    'insert_session' => 'Session Inserted successfully', 
    'insert_file' => 'File Inserted successfully', 
@@ -11,8 +12,10 @@ return [
    'insert_task' => 'Task Inserted successfully', 
    'insert_daysSystem' => 'Days System Inserted successfully', 
    'photo_add' => 'photo added successfully' ,
+   'some_thing_went_wrong' => 'Some thing went wrong, please try again later',
    'error_course_not_found' => 'Sorry, a course does not exists recently',
    'error_file_not_found' => 'Sorry, a file does not exists recently',
+   'error_classroom_not_found' => 'Sorry, a classroom does not exists recently',
    'error_teacher_not_found' => 'Sorry, a teacher does not exists recently',
    'error_student_not_found' => 'Sorry, a student does not exists recently',
    'error_session_not_found' => 'Sorry, a session does not exists recently',

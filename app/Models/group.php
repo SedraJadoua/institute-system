@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Lang;
 
 /**
@@ -42,17 +42,17 @@ class group extends Model
         $name = json_decode($value , true);
         return $name[Lang::getLocale()];
     }
+
     /**
-     * Get the courseTeacher associated with the group
+     * Get the couresTeacher that owns the group
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function courseTeacher(): HasOne
+    public function courseTeacher(): BelongsTo
     {
-        return $this->hasOne(teacherCourse::class, 'teacher_course_id');
+        return $this->belongsTo(teacherCourse::class, 'teacher_course_id');
     }
-
-
+   
     /**
      * Get all of the members for the group
      *

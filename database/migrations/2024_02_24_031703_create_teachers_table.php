@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->string('password');
             $table->string('user_name');
+            $table->json('description')->nullable();
             $table->uuid('speciality_id')->nullable();
             $table->foreign('speciality_id')->references('id')->on('specialties')->nullOnDelete();
             $table->boolean('is_admin')->default(false);

@@ -37,15 +37,11 @@ class storeRequest extends FormRequest
         return [
             'name_ar' =>[ 'required' , 'string' , new arabicLanguage ],
             'name_en' => [ 'required' , 'string' , new englishLanguage ],
-            'description_ar' => [ 'required' , 'string' , new arabicLanguage ],
-            'description_en' => [ 'required' , 'string' , new englishLanguage ],
+            'description_ar' => [ 'nullable' ,'required_with:description_en' ,'string' , new arabicLanguage ],
+            'description_en' => [ 'nullable' , 'required_with:description_ar' ,'string' , new englishLanguage ],
             'workshop' => 'required|boolean',
-            'photo' => 'required|max:2048' , 
-            'level' => 'required|integer|between:0,3' , 
-            'total_days' => 'required|integer' , 
-            'total_cost' => 'required|numeric|gte:0.0|lte:10000000000000000000.0' , 
-            'teacher_id' => 'required|exists:teachers,id' , 
-
+            'specialty_id' => 'required|exists:specialties,id',
+            'photo.*' => 'nullable|image|max:2048', 
         ];
 
     }

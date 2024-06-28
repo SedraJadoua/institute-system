@@ -38,6 +38,8 @@ class teacherRegister extends FormRequest
             'last_name_en' => 'required|regex:/^[a-zA-Z]+$/',
             'phoneNumber' => 'required|regex:/^\+\d{1,14}$/',
             'speciality_id' => 'required|exists:specialties,id',
+            'description_ar' => 'nullable|string',
+            'description_en' => 'nullable|string',
         ];
     }
 

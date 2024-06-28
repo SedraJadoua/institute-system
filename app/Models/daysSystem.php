@@ -43,8 +43,11 @@ class daysSystem extends Model
     use HasFactory , HasUuids;
     
     protected $table = 'days_system';
-    protected $fillable = ['work_day', 'day_workshop' , 'start_time' , 'end_time' , 'teacher_course_id' , 'classroom_id'];
+    
+    protected $fillable = ['work_day','day_workshop' , 'start_time' , 'end_time','teacher_course_id' , 'classroom_id', 'date'];
 
+    protected $hidden = ['updated_at' , 'created_at'];
+   
     public function getDayWorkshopAttribute($value)
     {
         $dayWorkshop = json_decode($value , true);

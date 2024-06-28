@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('status')->default(false);
             $table->foreign('student_id')->references('id')->on('students')->cascadeOnDelete();
             $table->foreign('session_id')->references('id')->on('sessions')->cascadeOnDelete();
+            $table->unique(['student_id' , 'session_id']);
             $table->timestamps();
         });
     }

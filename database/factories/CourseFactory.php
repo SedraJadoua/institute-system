@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\specialty;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,7 +29,8 @@ class CourseFactory extends Factory
         return [
             'name'=> $name, 
             'description' => $des,
-            'workshop' => fake()->boolean()
+            'workshop' => fake()->boolean(),
+            'specialty_id' => specialty::factory(),
         ];
     }
 }

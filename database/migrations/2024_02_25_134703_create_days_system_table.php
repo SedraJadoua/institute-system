@@ -18,6 +18,7 @@ return new class extends Migration
             // 2 => Sanday Thesday Thursday
             $table->enum('work_day' , ['0' , '1' , '2'])->nullable();
             $table->json('day_workshop')->nullable();
+            $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
             $table->uuid('classroom_id')->nullable();

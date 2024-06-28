@@ -68,6 +68,7 @@ class auth implements authInterface{
       $teacher->email= $data['email'];
       $teacher->password = Hash::make($password);
       $teacher->user_name = $userName;
+      $teacher->description = json_encode(['en' => $data['description_en'] , 'ar' => $data['description_ar']]);
       $teacher->phoneNumber = $data['phoneNumber'];
       $result = $teacher->save();
  

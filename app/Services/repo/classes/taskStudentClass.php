@@ -6,6 +6,7 @@ use App\Http\Requests\task\indexRequest;
 use App\Models\course;
 use App\Services\repo\interfaces\taskStudentInterface;
 use App\Trait\ResponseJson;
+use Auth;
 
 class taskStudentClass implements taskStudentInterface
 {
@@ -26,10 +27,22 @@ class taskStudentClass implements taskStudentInterface
     public function getStudentInCourse(string $id)
     {
       try {
-        $course = course::findOrFail($id)->where('id' , $id)
-        ->with(['courseTeacherStudent.student','courseTeacherStudent.taskStudent'])
+        
+        // return Auth::guard('teacher')->user()->id;
+        // return course::findOrFail($id)->where('id' , $id)
+        // ->whereHas(['courseTeacher' => function($q){
+        //     $q->where('teacher_id',  Auth::guard('teacher')->user()->id );
+        //   }])
+        // ->get();
+
+        return course::where('id', $id)
+        ->whereHas('courseTeacher', function ($query) {
+            $query->where('teacher_id', Auth::guard('teacher')->user()->id );
+        })->with(['courseTeacherStudent' => function($q){
+          $q->with(['student' , 'taskStudent']);
+          }]
+        )
         ->get();
-         return $course;
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return $this->returnError(__('strings.error_course_not_found'));
         }

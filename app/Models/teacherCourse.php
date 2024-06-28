@@ -54,6 +54,7 @@ class teacherCourse extends Model
     use HasFactory, HasUuids;
 
     protected $table = 'course_teacher';
+    protected $fillable = ['course_id' , 'level' , 'total_days' , 'total_cost' , 'teacher_id'];
     protected $hidden = [ 'created_at', 'updated_at'];
 
     /**
@@ -79,9 +80,9 @@ class teacherCourse extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function daysSystem(): HasMany
+    public function daysSystem(): HasOne
     {
-        return $this->hasMany(daysSystem::class, 'teacher_course_id');
+        return $this->hasOne(daysSystem::class, 'teacher_course_id');
     }
     /**
      * The students that belong to the teacherCourse
@@ -90,7 +91,18 @@ class teacherCourse extends Model
      */
     public function students(): BelongsToMany
     {
-        return $this->belongsToMany(student::class,  'course_teacher_student', 'course_teacher_id', 'student_id');
+        return $this->belongsToMany(student::class,  'course_teacher_student', 'course_teacher_id', 'student_id')
+        ->withPivot('paid');
+    }
+
+    /**
+     * Get all of the evaluation for the teacherCourse
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function evaluation(): HasMany
+    {
+        return $this->hasMany(evaluation::class, 'course_teacher_id');
     }
     /**
      * Get all of the tasks for the teacherCourse

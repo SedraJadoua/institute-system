@@ -15,7 +15,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->boolean('workshop');
             $table->json('name');
-            $table->json('description');
+            $table->json('description')->nullable();
+            $table->uuid('specialty_id')->nullable();
+            $table->foreign('specialty_id')->references('id')->on('specialties')->nullOnDelete();
             $table->timestamps();
         });
     }

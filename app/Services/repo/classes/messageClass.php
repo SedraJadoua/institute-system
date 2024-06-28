@@ -7,17 +7,27 @@ use App\Http\Requests\message\storeRequest;
 use App\Models\group;
 use App\Models\member;
 use App\Models\message;
+use App\Models\teacherCourse;
 use App\Services\repo\interfaces\messageInterface;
 use App\Trait\ResponseJson;
+use Auth;
 
 class messageClass implements messageInterface
 {
     use ResponseJson;
 
-
     public function index()
     {
-      return  group::with(['members.messages'])->get();
+        $user_id = Auth::guard('student')->check() ?
+        Auth::guard('student')->user()->id :
+        Auth::guard('teacher')->user()->id ;
+
+          return  group::whereHas('members', function ($q) use ($user_id) {
+            $q->where('student_id',$user_id)
+            ->orWhere('teacher_id' , $user_id);
+        })
+        ->with('members.messages' , 'members.student' , 'courseTeacher.teacher')
+        ->get(); 
     }
 
     public function store(storeRequest $request)

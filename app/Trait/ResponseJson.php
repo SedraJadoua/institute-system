@@ -3,7 +3,18 @@
 
 namespace App\Trait;
 
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
 trait  ResponseJson{
+   
+    protected function validationErrorResponse(Validator $validator)
+    {
+      $res = $this->sendListError($validator->errors());
+      throw new HttpResponseException($res);   
+    }
+
+
 
     public function sendResponse($result, $message = 'ok')
     {
@@ -35,7 +46,7 @@ trait  ResponseJson{
         ]);
     }
 
-    public function returnSuccessMessage($msg = "", $result)
+    public function returnSuccessMessage($msg = "", $result = null)
     {
         return [
             'success' => true,

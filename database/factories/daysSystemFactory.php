@@ -27,6 +27,7 @@ class daysSystemFactory extends Factory
         return [
             'day_workshop' => $day_workshop,
             'work_day' =>fake()->randomElement(['0' , '1', '2']), 
+            'date' => fake()->date(),
             'start_time' => fake()->time(),
             'end_time' => fake()->time(),
             'classroom_id' => classroom::factory(),

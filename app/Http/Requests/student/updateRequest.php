@@ -14,8 +14,7 @@ class updateRequest extends FormRequest
    
     protected function failedValidation(Validator $validator)
     {
-     $res = $this->sendListError($validator->errors());
-     throw new HttpResponseException($res);   
+      return $this->validationErrorResponse($validator);   
     }
     /**
      * Determine if the user is authorized to make this request.
@@ -37,7 +36,7 @@ class updateRequest extends FormRequest
                 'required',
                 'email',
                 Rule::unique('students', 'email')->ignore($this->id),
-                Rule::unique('teachers', 'email')->ignore($this->id),
+                Rule::unique('teachers', 'email'),
             ],
             'first_name_ar' => 'required|regex:/^[\p{Arabic}]+$/u',
             'first_name_en' => 'required|regex:/^[a-zA-Z]+$/',

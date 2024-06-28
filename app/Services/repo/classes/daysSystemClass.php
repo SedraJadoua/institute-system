@@ -13,5 +13,6 @@ class daysSystemClass implements daysSystemInterface {
     use ResponseJson;
 
     public function store(storeRequest $request){
+ 
     }
 }

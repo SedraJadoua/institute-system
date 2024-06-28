@@ -2,11 +2,13 @@
 
 namespace App\Services\repo\classes;
 
+use App\Models\course;
 use App\Models\session;
 use App\Models\teacher;
 use App\Models\teacherCourse;
 use App\Services\repo\interfaces\attendanceInterface;
 use App\Trait\ResponseJson;
+use Auth;
 
 class attendanceClass implements attendanceInterface {
 
@@ -17,10 +19,10 @@ class attendanceClass implements attendanceInterface {
          
     }
 
-    public function getTeacherCourses(string $teacherId)
+    public function getTeacherCourses()
     {
-   
-        $teacher = teacher::where('id' , $teacherId)->with(['teacherCourse.course'])->get();
+        $teacher_id =  Auth::guard('teacher')->user()->id;
+        $teacher = teacher::where('id' , $teacher_id)->with(['teacherCourse.course'])->get();
         if($teacher){
         $data = [];
         $jsonData = json_decode($teacher, true);
@@ -37,17 +39,19 @@ class attendanceClass implements attendanceInterface {
         return $this->returnError(__('strings.error_teacher_not_found'));
     }
 
-    public function attendanceAndPresence(string $teacherId , string $courseId)
+    public function attendanceAndPresence(string $courseId)
     {
         try {
-
-            $teacherCourse = teacherCourse::where('teacher_id' , $teacherId )
-            ->where('course_id' , $courseId)->with(['sessions.attendances.student' , 'students'])->get();
-           $teacherCourse =json_decode($teacherCourse[0] , true);
+            course::findOrFail($courseId);
+            $teacherCourse =
+             teacherCourse::where('teacher_id' ,Auth::guard('teacher')->user()->id)
+            ->where('course_id' , $courseId)
+            ->with(['sessions.attendances.student' , 'students'])
+            ->first();
             return $teacherCourse;
             }
-        catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return $this->returnError(__('strings.error_teacher_not_found'));
+            catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return $this->returnError(__('strings.error_course_not_found'));
 
            }  
         

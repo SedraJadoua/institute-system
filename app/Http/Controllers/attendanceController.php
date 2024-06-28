@@ -54,14 +54,14 @@ class attendanceController extends Controller
     }
 
 
-    public function getTeacherCourses(string $teacherId)
+    public function getTeacherCourses()
     {
-        return $this->attendance->getTeacherCourses($teacherId);
+        return $this->attendance->getTeacherCourses();
     }
 
 
-    public function attendanceAndPresence(string $teacherId , string $courseId)
+    public function attendanceAndPresence(string $courseId)
     {
-        return $this->attendance->attendanceAndPresence($teacherId , $courseId);
+        return $this->attendance->attendanceAndPresence( $courseId);
     }
 }

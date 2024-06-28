@@ -8,5 +8,6 @@ interface classroomInterface{
 
     public function index(); 
     public function store(storeRequest $request);
-    
+    public function show($id);
+
 }

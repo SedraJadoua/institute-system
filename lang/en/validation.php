@@ -169,7 +169,7 @@ return [
     'url' => 'The :attribute field must be a valid URL.',
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
-
+    'only_one' => 'The work day field or day workshop are required not both.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

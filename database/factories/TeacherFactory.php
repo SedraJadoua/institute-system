@@ -12,9 +12,6 @@ use Illuminate\Support\Str;
  */
 class TeacherFactory extends Factory
 {
-
-
-
     /**
      * Define the model's default state.
      *
@@ -31,6 +28,10 @@ class TeacherFactory extends Factory
             'ar' => fake('ar_SA')->lastName(),
             'en' => fake()->lastName(),
         ]);
+        $desc = json_encode([
+            'ar' => fake('ar_SA')->paragraph(2),
+            'en' => fake()->paragraph(2),
+        ]);
         $email = fake()->unique()->safeEmail();
         return [
             'email' => $email,
@@ -40,6 +41,7 @@ class TeacherFactory extends Factory
             'last_name' => $lastName,
             'user_name' => strstr($email, '@', true),
             'speciality_id' => specialty::factory(),
+            'description' => $desc,
         ];
     }
 }

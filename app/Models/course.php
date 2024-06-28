@@ -47,10 +47,10 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  */
 class course extends Model implements HasMedia
 {
-use HasFactory , HasUuids  , InteractsWithMedia;
+    use HasFactory , HasUuids  , InteractsWithMedia;
     
-    protected $fillable = ['name' , 'description' , 'workshop'];
-    protected $hidden  = ['created_at' , 'updated_at'  ];
+    protected $fillable = ['name' , 'description' , 'workshop' , 'specialty_id'];
+    protected $hidden  = ['created_at' , 'updated_at' , 'media' ];
 
 
     protected function getNameAttribute($value){ 
