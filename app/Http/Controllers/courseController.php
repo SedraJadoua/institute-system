@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\course\availableHours;
 use App\Http\Requests\course\openCourse;
 use App\Http\Requests\course\storeRequest;
 use App\Http\Requests\course\updateRequest;
@@ -36,15 +37,21 @@ class courseController extends Controller
     }
 
 
-    public function progressOfCourse()
+    public function progressOfCourse(Request $request)
     {
-        return $this->course->progressOfCourse();
+        return $this->course->progressOfCourse($request);
     }
 
 
     public function openNewCourse(openCourse $request)
     {
         return $this->course->openNewCourse($request);
+    }
+
+
+    public function returnHoursAvilable(availableHours $request)
+    {
+        return $this->course->returnHoursAvilable($request);
     }
 
     /**

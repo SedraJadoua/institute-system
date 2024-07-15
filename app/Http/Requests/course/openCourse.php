@@ -34,28 +34,26 @@ class openCourse extends FormRequest
     {
         return [
             'work_day' => 'nullable|string|required_without_all:day_workshop_ar,day_workshop_en',
-            'day_workshop_ar' => 'nullable|string|required_with:day_workshop_en|required_without:work_day',
-            'day_workshop_en' => 'nullable|string|required_with:day_workshop_ar|required_without:work_day',
             'course_id' => 'required|exists:courses,id', 
             'level' => 'required|integer|between:0,3', 
             'total_days' => 'required|integer', 
             'total_cost' => 'required|numeric|gte:0.0|lte:100000.0',
             'classroom_id' => 'required|exists:classrooms,id',
             'date' => 'required|date_format:Y-m-d|after_or_equal:today',
-            'start_time' => 'required|date_format:H:i',
+            'start_time' => ['required ','date_format:H:i'],
             'end_time' => 'required_with:start_time|date_format:H:i|after:start_time',
         ];
     }
 
-    public function withValidator($validator) {
-        $validator->after(function($validator){
-            $workDay = $this->input('work_day');
-            $dayWorkshopAr = $this->input('day_workshop_ar');
-            $dayWorkshopEn = $this->input('day_workshop_en');
-            if (isset($workDay) && (isset($dayWorkshopAr) || isset($dayWorkshopEn))) {
-                $validator->errors()->add('_', trans('validation.only_one'));
-            }
-        });
-    }
+    // public function withValidator($validator) {
+    //     $validator->after(function($validator){
+    //         $workDay = $this->input('work_day');
+    //         $dayWorkshopAr = $this->input('day_workshop_ar');
+    //         $dayWorkshopEn = $this->input('day_workshop_en');
+    //         if (isset($workDay) && (isset($dayWorkshopAr) || isset($dayWorkshopEn))) {
+    //             $validator->errors()->add('_', trans('validation.only_one'));
+    //         }
+    //     });
+    // }
     
 }

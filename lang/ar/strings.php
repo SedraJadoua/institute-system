@@ -1,7 +1,6 @@
 <?php 
 
 return [
-   
    'insert_course' => 'تم إدراج الدورة بنجاح', 
    'open_course' => 'تم فتح الدورة بنجاح', 
    'insert_classroom' => 'تم إدراج القاعة بنجاح', 
@@ -10,8 +9,10 @@ return [
    'insert_message' => 'تم ارسال الرسالة بنجاح', 
    'insert_specialty' => 'تم إدراج التخصص بنجاح', 
    'insert_photo' => 'تم إدراج الصورة بنجاح',
+   'insert_payment' => 'تم تسجيل الدفعة بنجاح',
    'insert_specialty' => 'تم إدراج التخصص بنجاح', 
    'insert_task' => 'تم إدراج المهمة بنجاح', 
+   'The_full_amount_has_been_paid' => 'تم تسديد كامل المبلغ',
    'photo_add' => 'تم اضافة الصورة بنجاح' ,
    'insert_daysSystem' => 'تم إدراج نظام الدوام بنجاح' ,
    'delete' => 'تم الحذف بنجاح', 
@@ -30,12 +31,15 @@ return [
    'error_photo_not_found' => 'عذرا ، الصورة غير موجودة مؤخرا',
    'update' => 'تم تحديث المعلومات بنجاح',
    'update_photo' => 'تم تحديث الصورة بنجاح',
+   'register_to_course' => 'رجاءاً التسجيل في الدورة أولا',
+   'remaining_amount' => 'المبلغ المدفوع اكبر من قيمة المبلغ الباقي من فضلك اعد دفع فقط المبلغ المتبقي و هي ',
    'update_Student' => 'تم تحديث معلومات الطالب بنجاح',
    'restore_All_teacher' => 'تم استعادة جميع المعلمين بنجاح',
    'restore_All_student' => 'تم استعادة جميع الطلاب بنجاح',
    'restore_teacher' => 'تم استعادة المعلم بنجاح',
    'file_is_large' => 'حجم الملف كبير , يجب أن يكون أقل من M30',
    'User_cancelled_the_payment' => 'ألغى المستخدم الدفعة.',
+   'the ' => 'ألغى المستخدم الدفعة.',
    'transaction_is_declined' => 'تم رفض المعاملة',
    'payment_successfully' => 'تم الدفع بنجاح. رقم المعاملة الخاص بك هو:'
 ]; 

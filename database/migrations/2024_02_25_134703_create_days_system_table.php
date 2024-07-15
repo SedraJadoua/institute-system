@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('days_system', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            // 0 => Daily 
-            // 1 => Saturday Monday Wednesday
-            // 2 => Sanday Thesday Thursday
-            $table->enum('work_day' , ['0' , '1' , '2'])->nullable();
-            $table->json('day_workshop')->nullable();
+            $table->date('day');
             $table->date('date');
+            $table->enum('work_day' , ['0' , '1' , '2'] );
             $table->time('start_time');
             $table->time('end_time');
             $table->uuid('classroom_id')->nullable();

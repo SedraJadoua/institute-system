@@ -9,6 +9,6 @@ interface taskStudentInterface{
 
     public function index(indexRequest $request); 
     // public function store(Request $request); 
-    public function getStudentInCourse(string $id);
+    public function getStudentInCourse(Request $request);
     
 }

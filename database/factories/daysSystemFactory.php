@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\classroom;
 use App\Models\teacherCourse;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as Faker;
 
@@ -19,17 +20,17 @@ class daysSystemFactory extends Factory
      */
     public function definition(): array
     {
-        
-        $day_workshop = json_encode([
-            'ar' => fake('ar_SA')->dayOfWeek(),
-            'en' => fake()->dayOfWeek()
-        ]);
+        $start_time = fake()->time('H:i');
+        $end_time = Carbon::createFromFormat('H:i' , $start_time)
+        ->addMinutes(rand(30,120))
+        ->format('H:i');
+      
         return [
-            'day_workshop' => $day_workshop,
-            'work_day' =>fake()->randomElement(['0' , '1', '2']), 
-            'date' => fake()->date(),
-            'start_time' => fake()->time(),
-            'end_time' => fake()->time(),
+            'date' => $this->faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
+            'start_time' => $start_time,
+            'end_time' => $end_time,
+            'day' => $this->faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
+            'work_day' => fake()->randomElement(['0' , '1' , '2' ]),
             'classroom_id' => classroom::factory(),
             'teacher_course_id' => teacherCourse::factory(),
         ];

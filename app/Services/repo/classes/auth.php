@@ -4,7 +4,6 @@
 namespace App\Services\repo\classes;
 
 use App\Http\Requests\auth\adminLogin;
-use App\Http\Requests\auth\codeCheckRequest;
 use App\Http\Requests\auth\login;
 use App\Http\Requests\auth\student\changePasswordRequest;
 use App\Http\Requests\auth\student\forgotPasswordRequest;
@@ -17,10 +16,9 @@ use App\Models\student;
 use App\Models\teacher;
 use App\Services\repo\interfaces\authInterface;
 use App\Trait\ResponseJson;
-use Illuminate\Http\Request;
+use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\Token;
 
 class auth implements authInterface{
@@ -133,14 +131,14 @@ class auth implements authInterface{
    
    public function forgotPassword(forgotPasswordRequest $request)
    {
-   
+    DB::beginTransaction();
     PasswordResetToken::where('email', $request->email)->delete();
     $data['email'] = $request->email;
     $data['code'] = mt_rand(100000, 999999);
     $data['created_at'] = now();
     $codeData = PasswordResetToken::create($data);
     Mail::to($request->email)->send(new SendCodeResetPassword($codeData->code));
-
+    DB::commit();
      return $this->sendResponse($data , trans('passwords.sent'));
          
    }
@@ -148,10 +146,10 @@ class auth implements authInterface{
    
   public function changePassword(changePasswordRequest $request)
   {
+    try {
+    DB::beginTransaction();
+      
     $passwordReset = PasswordResetToken::firstWhere('code', $request->code);
-    if(!$passwordReset){
-     return $this->returnError( trans('passwords.code_is_valid'));
-    }
     if ($passwordReset->created_at > now()->addHour()) {
         return $this->returnError(trans('passwords.code_is_expire'), 422);
     }
@@ -169,8 +167,12 @@ class auth implements authInterface{
       }
     }
     PasswordResetToken::where('code', $passwordReset->code)->delete();
-
-    return $this->sendResponse($student, trans('passwords.password_has_been_successfully_reset'));  
+    DB::commit();
+    return $this->sendResponse($student, trans('passwords.password_has_been_successfully_reset')); 
+    } catch (\Throwable $th) {
+      DB::rollBack();
+      return $this->returnError($th->getMessage());
+    } 
   }
 
 }

@@ -9,6 +9,8 @@ use App\Models\teacherCourse;
 use App\Services\repo\interfaces\attendanceInterface;
 use App\Trait\ResponseJson;
 use Auth;
+use Illuminate\Http\Request ;
+use Throwable;
 
 class attendanceClass implements attendanceInterface {
 
@@ -19,9 +21,9 @@ class attendanceClass implements attendanceInterface {
          
     }
 
-    public function getTeacherCourses()
+    public function getTeacherCourses(Request $request)
     {
-        $teacher_id =  Auth::guard('teacher')->user()->id;
+        $teacher_id =  $request->teacher_id;
         $teacher = teacher::where('id' , $teacher_id)->with(['teacherCourse.course'])->get();
         if($teacher){
         $data = [];
@@ -39,21 +41,17 @@ class attendanceClass implements attendanceInterface {
         return $this->returnError(__('strings.error_teacher_not_found'));
     }
 
-    public function attendanceAndPresence(string $courseId)
+    public function attendanceAndPresence(Request $request)
     {
         try {
-            course::findOrFail($courseId);
-            $teacherCourse =
-             teacherCourse::where('teacher_id' ,Auth::guard('teacher')->user()->id)
-            ->where('course_id' , $courseId)
-            ->with(['sessions.attendances.student' , 'students'])
-            ->first();
-            return $teacherCourse;
+            return teacherCourse::where('id', $request->course_teacher_id)
+            ->with(['sessions.attendances.student' , 'students'])->first();
             }
             catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return $this->returnError(__('strings.error_course_not_found'));
-
            }  
-        
+           catch (Throwable $e) {
+            return $this->returnError($e->getMessage());
         }
+    }
 }

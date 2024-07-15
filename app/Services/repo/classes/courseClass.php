@@ -1,24 +1,23 @@
 <?php
 
+
 namespace App\Services\repo\classes;
 
+use App\Http\Requests\course\availableHours;
 use App\Http\Requests\course\openCourse;
 use App\Http\Requests\course\storeRequest;
 use App\Http\Requests\course\updateRequest;
 use App\Models\course;
 use App\Models\daysSystem;
-use App\Models\evaluation;
-use App\Models\group;
-use App\Models\member;
 use App\Models\session;
-use App\Models\student;
 use App\Models\teacherCourse;
 use App\Services\repo\interfaces\courseInterface;
 use App\Trait\ResponseJson;
+use Carbon\Carbon;
 use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Throwable;
 
 class courseClass implements courseInterface
@@ -63,39 +62,59 @@ class courseClass implements courseInterface
         return $this->index(0);   
     }
 
+    public function returnHoursAvilable(availableHours $request)
+    {     
+        try{
+        $endDate = daysSystem::getEndDate($request->date,$request->work_day , $request->total_days);
+        $results =  daysSystem::getSpecificDays($request->date, $endDate, $request->work_day);
+        $daysSystem = daysSystem::where('classroom_id', $request->classroom_id)
+        ->whereIn('day' , $results)
+        ->select('start_time' , 'end_time')
+        ->get();
+        $uniqueDaysSystem = $daysSystem->unique(function ($item) {
+            return $item['start_time'] . $item['end_time'];
+        })->values();
+        $busyTime =  daysSystem::convertObjectToArray($uniqueDaysSystem);
+        return $this->avilableTime($busyTime);
+       } catch(Throwable $e){
+         throw $e;
+       }
+    }
+
+
     public function openNewCourse(openCourse $request)
     {
        try{
-        
         DB::beginTransaction();
-
         $teacherCourse = teacherCourse::Create([
             'course_id' => $request->course_id, 
             'level' => $request->level, 
             'total_days' => $request->total_days, 
             'total_cost' => $request->total_cost,
            ]);
-
+           
          if($request->has('work_day')){
-            
+            $endDate = daysSystem::getEndDate($request->date,$request->work_day , $request->total_days);
+            $results = daysSystem::getSpecificDays($request->date, $endDate, $request->work_day);
+            foreach($results as $result){
             $teacherCourse->daysSystem()->create([
                 'classroom_id' => $request->classroom_id,
                 'date' => $request->date,
+                'day' => $result,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
                 'work_day' => $request->work_day
             ]);
+            }
+
          }else {
-            $day_workshop = json_encode([
-                'ar' => $request->day_workshop_ar,
-                'en' => $request->day_workshop_en,
-            ]);
             $teacherCourse->daysSystem()->create([
                 'classroom_id' => $request->classroom_id,
                 'date' => $request->date,
+                'day' => $request->date,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
-                'day_workshop' => $day_workshop,
+                'end_course' => $request->date,
             ]);
          }
 
@@ -108,6 +127,31 @@ class courseClass implements courseInterface
        }
     }
 
+
+    public function avilableTime(array $busyTime)
+    {
+        try{
+        $range = range(8 , 18);
+        foreach ($busyTime as $time)
+        {
+         for ( $i=$time[0]+1 ; $i <$time[1] ; $i++) {
+            $range = array_filter($range, function($value) use ($i) {
+                return $value != $i;
+            });
+         }
+       }
+        sort($range);  
+        foreach($range as $hour){
+         $h = Carbon::today()->setTime($hour, 0);
+            $ranges[] = $h->format('H:i');
+        }     
+       return $ranges;
+
+    }
+        catch(Throwable $th) {
+            return $this->returnError($th->getMessage());
+        }
+    }
 
     public function store(storeRequest $request)
     {
@@ -187,12 +231,12 @@ class courseClass implements courseInterface
     }
 
 
-    public function progressOfCourse()
+    public function progressOfCourse(Request $request)
     {
        try {
         
         $data = [];
-        $student_id = Auth::guard('student')->user()->id;
+        $student_id = $request->student_id;
         $courses =  Course::whereHas('courseTeacher.students', function ($q) use ($student_id) {
             $q->where('students.id', $student_id);
         })->with('courseTeacher')->get();

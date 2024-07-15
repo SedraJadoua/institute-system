@@ -6,7 +6,6 @@ use App\Http\Requests\classroom\storeRequest;
 use App\Models\classroom;
 use App\Services\repo\interfaces\classroomInterface;
 use App\Trait\ResponseJson;
-use DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class classroomClass implements classroomInterface
@@ -51,7 +50,7 @@ class classroomClass implements classroomInterface
           $q->whereNotNull('work_day');
         }) 
         ->with(['daysSystem' => function($q){
-          $q->select('id', 'classroom_id', 'work_day', 'teacher_course_id') // Add your specific columns here
+          $q->select('id', 'classroom_id','date' , 'start_time' ,  'work_day', 'teacher_course_id') // Add your specific columns here
           ->with(['courseTeacher' => function($q) {
               $q->select('id', 'total_cost' , 'course_id', 'teacher_id')
               ->whereNotNull('teacher_id')->with(
@@ -63,7 +62,11 @@ class classroomClass implements classroomInterface
           }]);
         }])
         ->findOrFail($id);
-        return $classRoom;
+        $data = json_decode($classRoom, true);
+        $daysSystem = $data['days_system'];
+        $uniqueTeacherCourseIds = collect($daysSystem)->unique('teacher_course_id');
+        $indexedData = $uniqueTeacherCourseIds->values()->toArray();
+        return $indexedData;
        }catch (ModelNotFoundException $e) {
         return $this->returnError(trans('strings.error_classroom_not_found'));
          }
@@ -71,5 +74,33 @@ class classroomClass implements classroomInterface
           return  $th->getMessage();
       }
     }
+ 
 
+    public function appointments(string $id)
+    {
+      try {
+        $classRoom = classroom::findOrFail($id);
+        $size = $classRoom->size;        
+        $uniqueTeacherCourseIds = collect($classRoom->daysSystem)->unique('teacher_course_id')->values();
+        $uniqueTeacherCourseIds->each(function($daySystem) use ($size){
+             $num = $daySystem->courseTeacher->courseTeacherStudent->count();
+                  $daySystem->number = $num . '/'.$size;
+          });
+        return $uniqueTeacherCourseIds->map(function($item){
+             return [
+              'id' => $item->id,
+              'number' => $item->number,
+              'start_time' => $item->start_time,
+              'work_day' => $item->work_day,
+              'date' => $item->date,
+             ];
+        });
+       }catch (ModelNotFoundException $e) {
+        return $this->returnError(trans('strings.error_classroom_not_found'));
+         }
+        catch (\Throwable $th) {
+          return  $th->getMessage();
+      }
+        
+    }
 }

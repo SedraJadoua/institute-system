@@ -3,7 +3,7 @@
 <p> you can login to our application with </p>
 
 @component('mail::panel')
-userName: {{ $userName }} and password: {{ $password}}
+userName: {{ $userName }} and password: {{ $password }}
 @endcomponent
 
 <p>do not share this information with anybody</p>

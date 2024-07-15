@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\task\indexRequest;
-use App\Services\repo\interfaces\taskInterface;
 use App\Services\repo\interfaces\taskStudentInterface;
 use Illuminate\Http\Request;
 
@@ -58,8 +57,8 @@ class taskStudentController extends Controller
     }
 
 
-    public function getStudentInCourse(string $id)
+    public function getStudentInCourse(Request $request)
     {
-        return $this->taskStudent->getStudentInCourse($id);
+        return $this->taskStudent->getStudentInCourse($request);
     }
 }

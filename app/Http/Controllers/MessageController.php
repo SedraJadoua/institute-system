@@ -18,9 +18,9 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->message->index();   
+        return $this->message->index($request);   
     }
 
     /**
@@ -34,9 +34,9 @@ class MessageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $group_id)
+    public function show(Request $request)
     {
-        return $this->message->show($group_id);
+        return $this->message->show($request);
     }
 
     /**

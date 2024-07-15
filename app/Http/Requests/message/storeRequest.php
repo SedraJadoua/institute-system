@@ -34,7 +34,9 @@ class storeRequest extends FormRequest
     {
         return [
             'message' => 'required|string',
-            'group_id' => 'required|exists:groups,id'
+            'group_id' => 'required|exists:groups,id',
+            'student_id' => 'nullable|required_without:teacher_id|exists:students,id',
+            'teacher_id' => 'nullable|required_without:student_id|exists:teachers,id',
         ];
     }
 }

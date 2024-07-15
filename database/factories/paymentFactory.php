@@ -21,7 +21,7 @@ class paymentFactory extends Factory
             'teacher_course_student_id' => courseTeacherStudent::factory(),
             'amount' => fake()-> numberBetween(30 , 2000) ,
             'date' => now(),
-            'payment_method' => fake()->name(),
+            'payment_method' => fake()->randomElement(['0','1']),
             'payment_id'=> fake()->unique()->creditCardNumber()
         ];
     }

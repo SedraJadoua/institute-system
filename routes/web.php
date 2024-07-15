@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\paymentController;
+use App\Models\daysSystem;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('paypal');
 });
 
+
+
+
+// Route::controller(paymentController::class)
+// ->group(function(){
+//        Route::post('/charge', 'charge')->name('charge');
+//        Route::get('/success', 'success')->name('success');
+//        Route::get('/payError', 'payError')->name('payError');
+// });

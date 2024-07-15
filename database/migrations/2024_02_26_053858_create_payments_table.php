@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // 1 paypal 
+        // 0 local
         Schema::create('payments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->float('amount', 10 , 2);
             $table->date('date');
             $table->uuid('teacher_course_student_id')->nullable();
             $table->foreign('teacher_course_student_id')->references('id')->on('course_teacher_student')->nullOnDelete();
-            $table->string('payment_method');
-            $table->string('payment_id');
+            $table->enum('payment_method' , ['0' , '1']);
+            $table->string('payment_id')->nullable();
             $table->timestamps();
         });
     }

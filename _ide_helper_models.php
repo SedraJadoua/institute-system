@@ -188,39 +188,31 @@ namespace App\Models{
  * 
  *
  * @property string $id
- * @property string $name
- * @property int|null $flag
- * @property string|null $clock
- * @property string|null $end_clock
+ * @property string|null $work_day
+ * @property string $end_course
+ * @property string $date
+ * @property string $start_time
+ * @property string $end_time
  * @property string|null $classroom_id
  * @property string $teacher_course_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\classroom|null $classroom
  * @property-read \App\Models\teacherCourse $courseTeacher
+ * @property-read mixed $day_workshop
  * @method static \Database\Factories\daysSystemFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem query()
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereClassroomId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereClock($value)
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereEndClock($value)
- * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereFlag($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereEndCourse($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereEndTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereStartTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereTeacherCourseId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property string|null $work_day
- * @property string|null $day_workshop
- * @property string $date
- * @property string $start_time
- * @property string $end_time
- * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereDayWorkshop($value)
- * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereEndTime($value)
- * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereStartTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|daysSystem whereWorkDay($value)
  */
 	class daysSystem extends \Eloquent {}
@@ -626,7 +618,7 @@ namespace App\Models{
  * 
  *
  * @property string $id
- * @property string $teacher_id
+ * @property string|null $teacher_id
  * @property string $course_id
  * @property int $total_days
  * @property string $level
@@ -636,8 +628,11 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\attendance> $attendance
  * @property-read int|null $attendance_count
  * @property-read \App\Models\course $course
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\daysSystem> $daysSystem
- * @property-read int|null $days_system_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\courseTeacherStudent> $courseTeacherStudent
+ * @property-read int|null $course_teacher_student_count
+ * @property-read \App\Models\daysSystem|null $daysSystem
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\evaluation> $evaluation
+ * @property-read int|null $evaluation_count
  * @property-read \App\Models\group|null $group
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\session> $sessions
  * @property-read int|null $sessions_count
@@ -645,7 +640,7 @@ namespace App\Models{
  * @property-read int|null $students_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\task> $tasks
  * @property-read int|null $tasks_count
- * @property-read \App\Models\teacher $teacher
+ * @property-read \App\Models\teacher|null $teacher
  * @method static \Database\Factories\teacherCourseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse newQuery()
@@ -658,9 +653,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereTotalCost($value)
  * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereTotalDays($value)
  * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\evaluation> $evaluation
- * @property-read int|null $evaluation_count
  */
 	class teacherCourse extends \Eloquent {}
 }

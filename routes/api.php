@@ -7,6 +7,7 @@ use App\Http\Controllers\courseController;
 use App\Http\Controllers\daysSystemController;
 use App\Http\Controllers\fileController;
 use App\Http\Controllers\imageController;
+use App\Http\Controllers\localPaymentController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\paymentController;
 use App\Http\Controllers\sessionController;
@@ -15,8 +16,13 @@ use App\Http\Controllers\studentController;
 use App\Http\Controllers\taskController;
 use App\Http\Controllers\taskStudentController;
 use App\Http\Controllers\teacherController;
+use App\Models\attendance;
+use App\Rules\noTimeConflict;
+use App\Services\repo\classes\localPaymentClass;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +45,10 @@ Route::prefix('auth')->controller(auth::class)->group(function(){
 Route::prefix('course')->controller(courseController::class)->group(function(){
        Route::get('/NewestWorkshops', 'newestWorkshop');
        Route::get('/NewestCourses', 'newestCourses');
-       Route::get('/progress-of-course', 'progressOfCourse')->middleware('auth:student');
+       Route::get('/progress-of-course', 'progressOfCourse');
+       // ->middleware('auth:student');
        Route::post('/open-new-course', 'openNewCourse');
+       Route::post('/return-hour-Available', 'returnHoursAvilable');
 
 });
 Route::prefix('teacher')
@@ -57,14 +65,25 @@ Route::prefix('session')
 ->group(function(){
        Route::post('/restore/{id}', 'restore');
 });
+Route::prefix('classroom')
+->controller(classroomController::class)
+->group(function(){
+       Route::get('/appointments/{id}', 'appointments');
+});
+Route::prefix('message')
+->controller(MessageController::class)
+->group(function(){
+       Route::get('/show', 'show');
+});
 
 Route::prefix('payment')
 ->controller(paymentController::class)
 ->group(function(){
-       Route::post('/charge', 'charge')->middleware('auth:student');
+       Route::post('/charge', 'charge');
        Route::get('/success', 'success')->name('success');
        Route::get('/payError', 'payError')->name('payError');
 });
+
 Route::prefix('student')
 ->controller(studentController::class)
 // ->middleware('admin')
@@ -77,11 +96,12 @@ Route::prefix('student')
 
 Route::prefix('attendance')
 ->controller(attendanceController::class)
-->middleware('auth:teacher')
+// ->middleware('auth:teacher')
 ->group(function(){
-       Route::get('/get-teacher-courses', 'getTeacherCourses');
-       Route::get('/attendance-and-presence/{courseId}', 'attendanceAndPresence');
+       Route::get('/get-teacher-courses',  'getTeacherCourses');
+       Route::get('/attendance-and-presence','attendanceAndPresence');
 });
+
 Route::prefix('image')
 ->controller(imageController::class)
 ->group(function(){
@@ -94,17 +114,22 @@ Route::prefix('file')
 ->group(function(){
        Route::get('/index/{sessionId}', 'index');
 });
+
 Route::prefix('taskStudent')
-->middleware('auth:teacher')
+// ->middleware('auth:teacher')
 ->controller(taskStudentController::class)
 ->group(function(){
-       Route::get('/getStudentInCourse/{coureId}', 'getStudentInCourse');
+       Route::get('/getStudentInCourse', 'getStudentInCourse');
 });
 
-Route::post('/ar', function (){
-       Artisan::call('classroom:update-status');
+Route::prefix('payment')
+->controller(localPaymentController::class)
+->group(function(){
+       Route::get('/show', 'show');
 });
+
 Route::resource('/course', courseController::class);
+Route::resource('/local-payment', localPaymentController::class)->only('store' , 'index' );
 Route::resource('/days_system', daysSystemController::class);
 Route::resource('/file', fileController::class);
 Route::resource('/classRoom', classroomController::class);
@@ -116,7 +141,4 @@ Route::resource('/student', studentController::class);
 // ->middleware('admin');
 Route::resource('/taskStudent', taskStudentController::class);
 Route::resource('/task', taskController::class);
-Route::resource('/', attendanceController::class);
-// ->middleware('auth:teacher');
-
-Route::resource('/message' , MessageController::class)->middleware('authTeacherOrStudent');
+Route::resource('/message' , MessageController::class);

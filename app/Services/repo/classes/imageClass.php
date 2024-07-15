@@ -3,12 +3,9 @@
 namespace App\Services\repo\classes;
 
 use App\Http\Requests\photo\storeRequest;
-use App\Models\classroom;
 use App\Models\course;
-
 use App\Services\repo\interfaces\imageInterface;
 use App\Trait\ResponseJson;
-use Ramsey\Uuid\Uuid;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class imageClass implements imageInterface

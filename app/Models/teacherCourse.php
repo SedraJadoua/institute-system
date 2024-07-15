@@ -11,44 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-/**
- * 
- *
- * @property string $id
- * @property string $teacher_id
- * @property string $course_id
- * @property int $total_days
- * @property string $level
- * @property float $total_cost
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\attendance> $attendance
- * @property-read int|null $attendance_count
- * @property-read \App\Models\course $course
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\daysSystem> $daysSystem
- * @property-read int|null $days_system_count
- * @property-read \App\Models\group|null $group
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\session> $sessions
- * @property-read int|null $sessions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\student> $students
- * @property-read int|null $students_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\task> $tasks
- * @property-read int|null $tasks_count
- * @property-read \App\Models\teacher $teacher
- * @method static \Database\Factories\teacherCourseFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse query()
- * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereCourseId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereLevel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereTeacherId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereTotalCost($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereTotalDays($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacherCourse whereUpdatedAt($value)
- * @mixin \Eloquent
- */
 class teacherCourse extends Model
 {
     use HasFactory, HasUuids;
@@ -95,6 +57,15 @@ class teacherCourse extends Model
         ->withPivot('paid');
     }
 
+    /**
+     * Get all of the courseTeacherStudent for the teacherCourse
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function courseTeacherStudent(): HasMany
+    {
+        return $this->hasMany(courseTeacherStudent::class, 'course_teacher_id');
+    }
     /**
      * Get all of the evaluation for the teacherCourse
      *

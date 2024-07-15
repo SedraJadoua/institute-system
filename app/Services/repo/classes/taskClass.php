@@ -15,7 +15,6 @@ class taskClass implements taskInterface
 
     public function index()
     {
-        return 'se';
     }
 
     public function store(storeRequest $request)

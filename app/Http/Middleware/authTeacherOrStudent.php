@@ -4,7 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Auth;
 
 class authTeacherOrStudent
 {
@@ -15,12 +17,10 @@ class authTeacherOrStudent
      */
     public function handle(Request $request, Closure $next): Response
     {
-      if(auth()->guard('student')->user() || auth()->guard('teacher')->user()) 
+      if(!(Auth::guard('student')->check() || Auth::guard('teacher')->check())) 
       {
-        return $next($request);
+        abort(401);
       }
-      return response()->json([
-        'message' => 'Unauthenticated',
-      ] , 403);
+      return $next($request);
     }
 }

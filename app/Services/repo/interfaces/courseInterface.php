@@ -2,10 +2,11 @@
 
 namespace App\Services\repo\interfaces;
 
+use App\Http\Requests\course\availableHours;
 use App\Http\Requests\course\openCourse;
 use App\Http\Requests\course\storeRequest;
 use App\Http\Requests\course\updateRequest;
-use phpDocumentor\Reflection\Types\Boolean;
+use Illuminate\Http\Request;
 
 interface courseInterface{
 
@@ -17,7 +18,8 @@ interface courseInterface{
 
     public function newestWorkshops();
     public function newestCourses();
-    public function progressOfCourse();
+    public function progressOfCourse(Request $request);
+    public function returnHoursAvilable(availableHours $request);
     public function openNewCourse(openCourse $request);
     
 }

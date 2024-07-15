@@ -234,7 +234,7 @@ return [
         'level' => 'المستوى',
         'total_days' => 'عدد الأيام',
         'total_cost' => 'الكلفة',
-        'teacher_id' => 'الأستاذ',
+        // 'teacher_id' => 'الأستاذ',
         'date' => 'التاريخ',
         'mark' => 'العلامة',
         'start_time' => 'وقت البداية',

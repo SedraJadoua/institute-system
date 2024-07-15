@@ -7,22 +7,24 @@ use App\Http\Requests\message\storeRequest;
 use App\Models\group;
 use App\Models\member;
 use App\Models\message;
-use App\Models\teacherCourse;
+use App\Models\student;
+use App\Models\teacher;
 use App\Services\repo\interfaces\messageInterface;
 use App\Trait\ResponseJson;
 use Auth;
+use Illuminate\Http\Request;
 
 class messageClass implements messageInterface
 {
     use ResponseJson;
 
-    public function index()
+    public function index(Request $request)
     {
-        $user_id = Auth::guard('student')->check() ?
-        Auth::guard('student')->user()->id :
-        Auth::guard('teacher')->user()->id ;
-
-          return  group::whereHas('members', function ($q) use ($user_id) {
+        // $user_id = Auth::guard('student')->check() ?
+        // Auth::guard('student')->user()->id :
+        // Auth::guard('teacher')->user()->id ;
+        $user_id = $request->user_id;
+        return  group::whereHas('members', function ($q) use ($user_id) {
             $q->where('student_id',$user_id)
             ->orWhere('teacher_id' , $user_id);
         })
@@ -34,26 +36,29 @@ class messageClass implements messageInterface
     {
         try {
             $group = group::findOrFail($request->group_id);
-            if(auth()->guard('student')->check())
+            if($request->has('student_id'))
             { 
+                $user_id = $request->student_id;
+                $user = student::findorFail($user_id);
                 $member = member::where('group_id',$group->id)
-                ->where('student_id',auth()->guard('student')->user()->id)
+                ->where('student_id', $user_id)
                 ->first();
             }
             else 
             { 
+                $user_id = $request->teacher_id;
+                $user = teacher::findorFail($user_id);
                 $member = member::where('group_id',$group->id)
-                ->where('teacher_id',auth()->guard('teacher')->user()->id)
+                ->where('teacher_id',$user_id)
                 ->first();
             }
             if(!$member){
               return $this->returnError(trans('strings.error_member_not_found'));
             }
-            $message =  message::Create([
-             'member_id' => $member->id,
+            $message =  $member->messages()->create([
              'message' => $request->message,
             ]);
-            broadcast(new sendMessage($request->message , $group->id))->toOthers();
+            broadcast(new sendMessage($request->message , $group->id , $user))->toOthers();
             return $this->returnSuccessMessage(trans('strings.insert_message'),$message );    
            
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
@@ -62,13 +67,14 @@ class messageClass implements messageInterface
     }
   
 
-    public function show(string $group_id)
+    public function show(Request $request)
     {
         try {
+
+            $group_id = $request->group_id;
             $group =  group::findOrFail($group_id)
             ->with(['members.messages'])
-            ->where('id', $group_id)
-            ->get();
+            ->first();
 
            return $group;
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {

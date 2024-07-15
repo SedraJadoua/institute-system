@@ -13,55 +13,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Lang;
 use Laravel\Passport\HasApiTokens;
 
-/**
- * 
- *
- * @property string $id
- * @property string $email
- * @property string $first_name
- * @property string $last_name
- * @property string $phoneNumber
- * @property string|null $photo
- * @property string $password
- * @property string $user_name
- * @property string|null $speciality_id
- * @property int $is_admin
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Passport\Client> $clients
- * @property-read int|null $clients_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\course> $courses
- * @property-read int|null $courses_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\session> $session
- * @property-read int|null $session_count
- * @property-read \App\Models\specialty|null $specialty
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\teacherCourse> $teacherCourse
- * @property-read int|null $teacher_course_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Passport\Token> $tokens
- * @property-read int|null $tokens_count
- * @method static \Database\Factories\teacherFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|teacher newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|teacher newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|teacher onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|teacher query()
- * @method static \Illuminate\Database\Eloquent\Builder|teacher whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher whereIsAdmin($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher wherePhoneNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher wherePhoto($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher whereSpecialityId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher whereUserName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|teacher withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|teacher withoutTrashed()
- * @mixin \Eloquent
- */
 class teacher extends Authenticatable
 {
     use HasFactory , HasUuids , HasApiTokens , SoftDeletes;

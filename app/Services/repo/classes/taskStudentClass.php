@@ -4,9 +4,10 @@ namespace App\Services\repo\classes;
 
 use App\Http\Requests\task\indexRequest;
 use App\Models\course;
+use App\Models\teacherCourse;
 use App\Services\repo\interfaces\taskStudentInterface;
 use App\Trait\ResponseJson;
-use Auth;
+use Illuminate\Http\Request;
 
 class taskStudentClass implements taskStudentInterface
 {
@@ -24,7 +25,7 @@ class taskStudentClass implements taskStudentInterface
         ->get();
     }
    
-    public function getStudentInCourse(string $id)
+    public function getStudentInCourse(Request $request)
     {
       try {
         
@@ -35,14 +36,20 @@ class taskStudentClass implements taskStudentInterface
         //   }])
         // ->get();
 
-        return course::where('id', $id)
-        ->whereHas('courseTeacher', function ($query) {
-            $query->where('teacher_id', Auth::guard('teacher')->user()->id );
-        })->with(['courseTeacherStudent' => function($q){
-          $q->with(['student' , 'taskStudent']);
-          }]
-        )
-        ->get();
+        // return course::where('id', $id)
+        // ->whereHas('courseTeacher', function ($query) {
+        //     $query->where('teacher_id', Auth::guard('teacher')->user()->id );
+        // })->with(['courseTeacherStudent' => function($q){
+        //   $q->with(['student' , 'taskStudent']);
+        //   }]
+        // )
+        // ->get();
+
+        return teacherCourse::where('id' , $request->course_teacher_id)
+        ->with(['courseTeacherStudent' => function($q){
+            $q->with(['student' , 'taskStudent']);
+            }])->first();
+
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return $this->returnError(__('strings.error_course_not_found'));
         }

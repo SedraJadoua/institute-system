@@ -2,28 +2,26 @@
 
 namespace App\Events;
 
+use App\Models\courseTeacherStudent;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class sendMessage implements ShouldBroadcast
+class paymentTransaction
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-
-    protected $message;
-    protected $groupId;
-    protected $user;
+    public $courseTeacherStudent;
     /**
      * Create a new event instance.
      */
-    public function __construct(string $message ,string $groupId , object $user)
+    public function __construct(courseTeacherStudent $courseTeacherStudent)
     {
-        $this->message = $message;
-        $this->groupId = $groupId;
-        $this->user = $user;
+     $this->courseTeacherStudent = $courseTeacherStudent;   
     }
 
     /**
@@ -34,15 +32,7 @@ class sendMessage implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('chat'.$this->groupId),
-        ];
-    }
-    
-    public function broadcastWith()
-    {
-        return [
-            'user' => $this->user,
-            'message' => $this->message,
+            new PrivateChannel('channel-name'),
         ];
     }
 }

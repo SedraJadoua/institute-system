@@ -1,21 +1,21 @@
-
 <?php
 
-namespace App\Http\Requests\auth;
+namespace App\Http\Requests\course;
 
 use App\Trait\ResponseJson;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class codeCheckRequest extends FormRequest
+class availableHours extends FormRequest
 {
 
     use ResponseJson;
+   
     protected function failedValidation(Validator $validator)
-    { 
-        $res = $this->sendListError($validator->errors());
-        throw new HttpResponseException($res);
+    {
+     $res = $this->sendListError($validator->errors());
+     throw new HttpResponseException($res);   
     }
     /**
      * Determine if the user is authorized to make this request.
@@ -33,7 +33,11 @@ class codeCheckRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'required|string|exists:password_reset_tokens',
+            'work_day' => 'nullable|string|required_without_all:day_workshop_ar,day_workshop_en',
+            'course_id' => 'required|exists:courses,id', 
+            'total_days' => 'required|integer', 
+            'classroom_id' => 'required|exists:classrooms,id',
+            'date' => 'required|date_format:Y-m-d|after_or_equal:today',
         ];
     }
 }
