@@ -21,5 +21,10 @@ interface courseInterface{
     public function progressOfCourse(Request $request);
     public function returnHoursAvilable(availableHours $request);
     public function openNewCourse(openCourse $request);
-    
+    public function courseNeedTeacher();
+    public function accept(Request $request);
+    public function courseNeedTeacherInDash(Request $request);
+    public function acceptTeacher(Request $request);
+    public function getCoursesofSpeciality(Request $request);
+    public function getCoursesAddedOnly();
 }

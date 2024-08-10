@@ -46,11 +46,12 @@ class classroomClass implements classroomInterface
     public function show($id)
     {
        try {
+        $classRooms = classRoom::select('name' , 'id')->get();
         $classRoom = classroom::select('name' , 'id')->whereHas('daysSystem' , function($q){
           $q->whereNotNull('work_day');
         }) 
         ->with(['daysSystem' => function($q){
-          $q->select('id', 'classroom_id','date' , 'start_time' ,  'work_day', 'teacher_course_id') // Add your specific columns here
+          $q->select( 'classroom_id' ,'date' , 'start_time' , 'teacher_course_id')
           ->with(['courseTeacher' => function($q) {
               $q->select('id', 'total_cost' , 'course_id', 'teacher_id')
               ->whereNotNull('teacher_id')->with(
@@ -61,12 +62,37 @@ class classroomClass implements classroomInterface
               }]);
           }]);
         }])
-        ->findOrFail($id);
+        ->findOrFail($id)
+        ;
         $data = json_decode($classRoom, true);
+ 
         $daysSystem = $data['days_system'];
-        $uniqueTeacherCourseIds = collect($daysSystem)->unique('teacher_course_id');
-        $indexedData = $uniqueTeacherCourseIds->values()->toArray();
-        return $indexedData;
+        $filteredData = array_filter($daysSystem, function ($item) {
+          return $item['course_teacher'] != null;
+      });
+      $uniqueTeacherCourseIds = collect($filteredData)->unique('teacher_course_id');
+
+      $indexedData = $uniqueTeacherCourseIds->values()->map(function ($item){
+          return [
+            'id' => $item['course_teacher']['id'] ?? null,
+            'price' => $item['course_teacher']['total_cost'] ?? null,
+            'date' => $item['date'] ?? null,
+            'time' => $item['start_time'] ?? null,
+            'course' => [
+                'id' => $item['course_teacher']['course']['id'] ?? null,
+                'name' => $item['course_teacher']['course']['name'] ?? null,
+            ],
+            'teacher' => [
+                'id' => $item['course_teacher']['teacher']['id'] ?? null,
+                'name' => ($item['course_teacher']['teacher']['first_name'] ?? '') . ' ' . ($item['course_teacher']['teacher']['last_name'] ?? ''),
+            ],
+        ];
+        });
+        return  [
+          'classrooms' => $classRooms , 
+          'all_halls' => $indexedData,
+        ];
+
        }catch (ModelNotFoundException $e) {
         return $this->returnError(trans('strings.error_classroom_not_found'));
          }
@@ -86,7 +112,8 @@ class classroomClass implements classroomInterface
              $num = $daySystem->courseTeacher->courseTeacherStudent->count();
                   $daySystem->number = $num . '/'.$size;
           });
-        return $uniqueTeacherCourseIds->map(function($item){
+          // return $uniqueTeacherCourseIds;
+        $app =  $uniqueTeacherCourseIds->map(function($item){
              return [
               'id' => $item->id,
               'number' => $item->number,
@@ -95,6 +122,12 @@ class classroomClass implements classroomInterface
               'date' => $item->date,
              ];
         });
+
+
+        return [
+          'appointments' => $app
+        ];
+        
        }catch (ModelNotFoundException $e) {
         return $this->returnError(trans('strings.error_classroom_not_found'));
          }

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->integer('rate');
+            $table->enum('rate' , ['0' , '1' , '2' ,'3' , '4' , '5']);
             $table->text('feedback')->nullable();
-            $table->uuid('student_id');
+            $table->uuid('student_id')->nullable();
             $table->foreign('student_id')->references('id')->on('students')->cascadeOnDelete();
             $table->uuid('course_teacher_id');
             $table->foreign('course_teacher_id')->references('id')->on('course_teacher')->cascadeOnDelete();

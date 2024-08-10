@@ -19,7 +19,8 @@ class teacher extends Authenticatable
 
     protected $fillable = ['speciality_id' , 'is_admin' , 'photo' , 'description'];
 
-    protected $hidden = [ 'is_admin'  ,'deleted_at' , 'created_at' , 'updated_at', 'password'];
+    protected $hidden = [ 'is_admin'  ,'deleted_at' , 'created_at' , 
+    'updated_at', 'pivot'];
 
 
     protected function getFirstNameAttribute($value){

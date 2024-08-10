@@ -15,7 +15,7 @@ class SpecialtyFactory extends Factory
     {
         $specialties = [
             [
-                'ar' => 'علم بيانات',
+                'ar' => 'علم البيانات',
                 'en' => 'computer science',
 
             ],
@@ -25,7 +25,7 @@ class SpecialtyFactory extends Factory
 
             ],
             [
-                'ar' => 'محلل بيانات',
+                'ar' => 'تحليل البيانات',
                 'en' => 'Data Anlaysis',
 
             ]

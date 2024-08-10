@@ -28,6 +28,19 @@ class daysSystem extends Model
         $dayWorkshop = json_decode($value , true);
         return $dayWorkshop[Lang::getLocale()];
     }
+    
+    public function getStartTimeAttribute($value)
+    {
+        $start_time = Carbon::createFromFormat('H:i:s', $value);
+        return $start_time->format('H:i A');;
+    }
+
+    public function getEndTimeAttribute($value)
+    {
+        $end_time = Carbon::createFromFormat('H:i:s', $value);
+        return $end_time->format('H:i A');;
+    }
+   
 
     public static function getSpecificDays($startDate, $endDate , $workDay)
     {

@@ -17,14 +17,10 @@ class sessionFactory extends Factory
      */
     public function definition(): array
     {
-        $title = json_encode([
-            'ar' => fake('ar_SA')->title(),
-            'en' => fake()->title(),
-         ]);
+       
         return [
             'course_teacher_id' => teacherCourse::factory(),
-            'date' =>  now(),
-            'title' => $title, 
+            'number_of_session' => fake()->numberBetween(1  , 50),   
         ];
     }
 }

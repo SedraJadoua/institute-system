@@ -2,7 +2,6 @@
 
 namespace App\Services\repo\interfaces;
 
-use App\Http\Requests\task\indexRequest;
 use App\Http\Requests\task\storeRequest;
 
 interface taskInterface{

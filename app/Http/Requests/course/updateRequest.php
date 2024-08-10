@@ -39,6 +39,7 @@ class updateRequest extends FormRequest
             'description_ar' => [ 'required' , 'string' , new arabicLanguage ],
             'description_en' => [ 'required' , 'string' , new englishLanguage ],
             'workshop' => 'required|boolean',
+            'specialty_id' => 'required|exists:specialties,id',
         ];
     }
 }

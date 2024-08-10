@@ -4,7 +4,8 @@ use App\Http\Controllers\attendanceController;
 use App\Http\Controllers\auth;
 use App\Http\Controllers\classroomController;
 use App\Http\Controllers\courseController;
-use App\Http\Controllers\daysSystemController;
+use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\evaluationController;
 use App\Http\Controllers\fileController;
 use App\Http\Controllers\imageController;
 use App\Http\Controllers\localPaymentController;
@@ -16,13 +17,7 @@ use App\Http\Controllers\studentController;
 use App\Http\Controllers\taskController;
 use App\Http\Controllers\taskStudentController;
 use App\Http\Controllers\teacherController;
-use App\Models\attendance;
-use App\Rules\noTimeConflict;
-use App\Services\repo\classes\localPaymentClass;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Validator;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +36,7 @@ Route::prefix('auth')->controller(auth::class)->group(function(){
        Route::post('login', 'login')->name('login');
        Route::post('forgot-password-student' , 'forgotPassword');
        Route::post('change-password', 'changePassword');
+       Route::get('all-teachers-students' , 'allTeachersAndStudents');
 });
 Route::prefix('course')->controller(courseController::class)->group(function(){
        Route::get('/NewestWorkshops', 'newestWorkshop');
@@ -48,8 +44,13 @@ Route::prefix('course')->controller(courseController::class)->group(function(){
        Route::get('/progress-of-course', 'progressOfCourse');
        // ->middleware('auth:student');
        Route::post('/open-new-course', 'openNewCourse');
+       Route::post('/accept', 'accept');
+       Route::get('/course-need-teacher-in-dash', 'courseNeedTeacherInDash');
        Route::post('/return-hour-Available', 'returnHoursAvilable');
-
+       Route::get('/course-need-teacher', 'courseNeedTeacher');
+       Route::get('/teacher-accept', 'acceptTeacher');
+       Route::get('/get-courses-of-speciality', 'getCoursesofSpeciality');
+       Route::get('/get-courses-added-only', 'getCoursesAddedOnly');
 });
 Route::prefix('teacher')
 ->controller(teacherController::class)
@@ -76,6 +77,8 @@ Route::prefix('message')
        Route::get('/show', 'show');
 });
 
+Route::get('get-tasks-student' , [taskStudentController::class , 'getTasksStudent']);
+ 
 Route::prefix('payment')
 ->controller(paymentController::class)
 ->group(function(){
@@ -98,8 +101,9 @@ Route::prefix('attendance')
 ->controller(attendanceController::class)
 // ->middleware('auth:teacher')
 ->group(function(){
-       Route::get('/get-teacher-courses',  'getTeacherCourses');
        Route::get('/attendance-and-presence','attendanceAndPresence');
+       Route::get('/attendance-and-presence-two','attendanceAndPresence2');
+       Route::get('/student-attendance-and-presence','studentAttendanceAndPresence');
 });
 
 Route::prefix('image')
@@ -109,6 +113,7 @@ Route::prefix('image')
        Route::post('/delete/{id}', 'destroy');
        Route::post('/store', 'store');
 });
+
 Route::prefix('file')
 ->controller(fileController::class)
 ->group(function(){
@@ -120,6 +125,16 @@ Route::prefix('taskStudent')
 ->controller(taskStudentController::class)
 ->group(function(){
        Route::get('/getStudentInCourse', 'getStudentInCourse');
+       Route::get('/marks-student-in-course', 'marksStudentInCourse');
+       Route::get('/get-marks-for-teacher', 'getMarksForTeacher');
+});
+Route::prefix('dash')
+// ->middleware('auth:teacher')
+->controller(dashboardController::class)
+->group(function(){
+       Route::get('/statistics' ,'statistics');
+       Route::get('/courses' , 'courses');
+       Route::get('/workshops' , 'workshops');
 });
 
 Route::prefix('payment')
@@ -130,11 +145,12 @@ Route::prefix('payment')
 
 Route::resource('/course', courseController::class);
 Route::resource('/local-payment', localPaymentController::class)->only('store' , 'index' );
-Route::resource('/days_system', daysSystemController::class);
+Route::resource('/evaluation', evaluationController::class);
 Route::resource('/file', fileController::class);
 Route::resource('/classRoom', classroomController::class);
 Route::resource('/session', sessionController::class);
 Route::resource('/specialty', specialtyController::class);
+Route::resource('/attendance', attendanceController::class);
 Route::resource('/teacher', teacherController::class);
 // ->middleware('admin');
 Route::resource('/student', studentController::class);
@@ -142,3 +158,4 @@ Route::resource('/student', studentController::class);
 Route::resource('/taskStudent', taskStudentController::class);
 Route::resource('/task', taskController::class);
 Route::resource('/message' , MessageController::class);
+

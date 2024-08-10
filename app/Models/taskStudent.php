@@ -38,6 +38,9 @@ class taskStudent extends Model
 
     protected $table = 'task_student';
 
+    protected $fillable = ['name' , 'mark' , 'studentMark', 'date' , 'course_teacher_student_id'];
+    protected $hidden = ['created_at' , 'updated_at' ,  'laravel_through_key'];
+
     
     protected function getNameAttribute($value)
     {

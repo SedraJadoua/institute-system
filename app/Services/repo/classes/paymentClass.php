@@ -59,7 +59,9 @@ class paymentClass implements paymentInterface {
             'amount' => $request->post('amount'),
             'currency' => env('PAYPAL_CURRENCY'),
             'returnUrl' => route('success' 
-            ,['course_teacher_student'=> $courseTeacherStudent]
+            ,['course_teacher_student'=> $courseTeacherStudent , 
+             'student_id' => $request->student_id, 
+             'course_teacher_id' => $request->course_teacher_id]
             ),
             'cancelUrl' => route('payError'),
             ))->send();
@@ -100,7 +102,12 @@ class paymentClass implements paymentInterface {
         
         $courseTeacherStudent = courseTeacherStudent::findOrFail($request->get('course_teacher_student'));
         if(!$courseTeacherStudent){
-            return $this->returnError(trans('strings.register_to_course'));
+            // return $this->returnError(trans('strings.register_to_course'));
+            $courseTeacherStudent = courseTeacherStudent::create([
+               'course_teacher_id' => $request->get('course_teacher_id'),
+               'student_id' => $request->get('student_id'), 
+               'paid' => 0,
+            ]);
         }
         if($courseTeacherStudent->paid == 1 ){
             return $this->returnSuccessMessage(trans('strings.The_full_amount_has_been_paid'));

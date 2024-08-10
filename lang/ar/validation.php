@@ -30,7 +30,7 @@ return [
         'numeric' => 'The :attribute field must be between :min and :max.',
         'string' => 'The :attribute field must be between :min and :max characters.',
     ],
-    'language' => 'هذه اللغة لحقل :attribute غير مدعومة هنا يجب أن يحتوي على حروف فقط', 
+    'language' => 'هذه اللغة لحقل :attribute غير مدعومة هنا يجب أن يحتوي على حروف عربية فقط', 
     'boolean' => 'يجب أن يكون حقل :attribute 0 أو 1 .',
     'can' => 'The :attribute field contains an unauthorized value.',
     'confirmed' => 'حقل :attribute تأكيد غير متطابق.',

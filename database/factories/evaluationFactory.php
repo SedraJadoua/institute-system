@@ -21,7 +21,7 @@ class evaluationFactory extends Factory
         return [
             'student_id' => student::factory(),
             'course_teacher_id' => teacherCourse::factory(),
-            'rate' => fake()->numberBetween(0 , 5 ),
+            'rate' => fake()->randomElement(['0' , '1' , '2' ,'3' , '4' , '5']),
         ];
     }
 }

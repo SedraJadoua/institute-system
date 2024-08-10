@@ -34,6 +34,8 @@ class attendance extends Model
 {
     use HasFactory , HasUuids;
 
+
+    protected $fillable = ['status' , 'session_id' , 'student_id'];
     protected $hidden = ['created_at' , 'updated_at'];
     /**
      * Get the student that owns the attendance

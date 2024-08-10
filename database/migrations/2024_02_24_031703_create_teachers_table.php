@@ -21,9 +21,10 @@ return new class extends Migration
             $table->string('password');
             $table->string('user_name');
             $table->json('description')->nullable();
+            $table->boolean('is_admin')->default(false);
+
             $table->uuid('speciality_id')->nullable();
             $table->foreign('speciality_id')->references('id')->on('specialties')->nullOnDelete();
-            $table->boolean('is_admin')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

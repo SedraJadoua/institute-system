@@ -19,8 +19,8 @@ class studentClass implements studentInterface {
 
     public function show(string $id){
         try {
-            $student = student::with(['courseTeacher.attendance' , 'courseTeacher.sessions'])->findOrFail($id);
-            return $student->makeHidden('deleted_at');
+            $student = student::findOrFail($id);
+            return $student;
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
 
             return $this->returnError(__('strings.error_student_not_found'));

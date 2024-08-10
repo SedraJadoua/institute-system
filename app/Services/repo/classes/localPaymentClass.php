@@ -4,7 +4,10 @@ namespace App\Services\repo\classes;
 
 use App\Events\paymentTransaction;
 use App\Models\courseTeacherStudent;
+use App\Models\group;
+use App\Models\member;
 use App\Models\payment;
+use App\Models\teacherCourse;
 use App\Services\repo\interfaces\localPaymentInterface;
 use App\Trait\ResponseJson;
 use Carbon\Carbon;
@@ -20,7 +23,8 @@ class localPaymentClass implements localPaymentInterface{
     public function index(){
        
      $courseTeacherStudent =  courseTeacherStudent::where('paid' , 0)->get();
-      return $courseTeacherStudent->map(function($item){          
+     
+      $data =  $courseTeacherStudent->map(function($item){          
             $student =   $item->student;
             $courseTeacher  = $item->courseTeacher;
             $course  = $courseTeacher->course;
@@ -30,12 +34,19 @@ class localPaymentClass implements localPaymentInterface{
             if($left_payment < 0){
                 $left_payment = 0;
             }
+
             return [
              'student_name' => $student->first_name." ". $student->last_name,
              'course_name' => $course->name,
              'left_payment' => $left_payment,  
             ];
        });    
+       $countCourseTeacherStudent = courseTeacherStudent::count();
+       $results = [
+         'payments' => $data ,
+         'not_complete_her_payments' => $countCourseTeacherStudent > 0  ? (float)number_format($courseTeacherStudent->count() / $countCourseTeacherStudent , 2) : 0 ,
+       ];
+       return $results ;
     }
 
     public function show(Request $request)
@@ -97,12 +108,38 @@ class localPaymentClass implements localPaymentInterface{
             $courseTeacherStudent = courseTeacherStudent::where('course_teacher_id' , $request->course_teacher_id)
                 ->where('student_id' , $request->student_id)
                 ->first();
+            
+            $total_cost = teacherCourse::whereId($request->course_teacher_id)
+            ->pluck('total_cost')
+            ->first();
+
+            if(!$courseTeacherStudent)
+            {
+                $paid = 0;
+                if($request->amount == $total_cost ){
+                    $paid = 1  ;
+                }
+
+                $courseTeacherStudent = courseTeacherStudent::create([
+                    'course_teacher_id' => $request->get('course_teacher_id'),
+                    'student_id' => $request->get('student_id'), 
+                    'paid' => $paid ,
+                 ]);
+              $groupId = group::where('teacher_course_id' , $request->course_teacher_id)
+              ->pluck('id')
+              ->first();
+
+              $member = member::create([
+                'student_id' =>$request->student_id,
+                'group_id' => $groupId,
+              ]);
+            }
             $total_payment = $courseTeacherStudent->payments->sum('amount');
 
             if($courseTeacherStudent->paid == 1 ){
                 return $this->returnSuccessMessage(trans('strings.The_full_amount_has_been_paid'));
             }           
-            $amount =  $request->amount * 4000;
+            $amount =  $request->amount;
             $total_cost =  $courseTeacherStudent->courseTeacher->total_cost;
             $left_payment = $total_cost - $total_payment;
             

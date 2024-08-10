@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Lang;
 
 /**
@@ -41,5 +42,15 @@ class task extends Model
     {
         $name = json_decode($value , true);
         return $name[Lang::getLocale()];
+    }
+
+    /**
+     * Get the courseTeacher that owns the task
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function courseTeacher(): BelongsTo
+    {
+        return $this->belongsTo(teacherCourse::class, 'course_teacher_id');
     }
 }

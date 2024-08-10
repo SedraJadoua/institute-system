@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\attendance\storeRequest;
+use App\Http\Requests\student\courseTeacherStudentRequest;
+use App\Http\Requests\teacher\courseTeacherRequest;
 use App\Services\repo\interfaces\attendanceInterface;
 use Illuminate\Http\Request;
 
@@ -13,14 +16,29 @@ class attendanceController extends Controller
         $this->attendance = $attendance;
     }
 
-    public function getTeacherCourses(Request $request)
+    public function index(courseTeacherRequest $request)
     {
-        return $this->attendance->getTeacherCourses($request);
+        return $this->attendance->index($request);
+    }
+ 
+
+    public function store(storeRequest $request)
+    {
+        return $this->attendance->store($request);
+    }
+
+    public function studentAttendanceAndPresence(courseTeacherStudentRequest $request)
+    {
+        return $this->attendance->studentAttendanceAndPresence($request);
     }
 
 
-    public function attendanceAndPresence(Request $request)
+    public function attendanceAndPresence(courseTeacherRequest $request)
     {
         return $this->attendance->attendanceAndPresence( $request);
+    }
+    public function attendanceAndPresence2(courseTeacherRequest $request)
+    {
+        return $this->attendance->attendanceAndPresence2( $request);
     }
 }

@@ -17,7 +17,7 @@ class teacherCourse extends Model
 
     protected $table = 'course_teacher';
     protected $fillable = ['course_id' , 'level' , 'total_days' , 'total_cost' , 'teacher_id'];
-    protected $hidden = [ 'created_at', 'updated_at'];
+    protected $hidden = [ 'created_at', 'updated_at' , 'accept'];
 
     /**
      * Get the teacher that owns the teacherCourse
@@ -112,5 +112,16 @@ class teacherCourse extends Model
     public function group(): HasOne
     {
         return $this->hasOne(group::class, 'teacher_course_id');
+    }
+
+
+    /**
+     * Get all of the taskStudents for the teacherCourse
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function taskStudents(): HasManyThrough
+    {
+        return $this->hasManyThrough(taskStudent::class, courseTeacherStudent::class , 'course_teacher_id' , 'course_teacher_student_id' );
     }
 }

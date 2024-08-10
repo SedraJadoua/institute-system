@@ -91,4 +91,35 @@ class courseController extends Controller
     {
         return $this->course->destroy($id);
     }
+
+
+    public function courseNeedTeacher()
+    {
+        return $this->course->courseNeedTeacher();
+    }
+
+    public function accept(Request $request)
+    {
+        return $this->course->accept($request);
+    }
+    
+    public function courseNeedTeacherInDash(Request $request)
+    {
+        return $this->course->courseNeedTeacherInDash($request);
+    }
+
+    public function acceptTeacher(Request $request)
+    {
+        return $this->course->acceptTeacher($request);
+    }
+    public function getCoursesofSpeciality(Request $request)
+    {
+        return $this->course->getCoursesofSpeciality($request);
+    }
+
+    public function getCoursesAddedOnly(){
+        return $this->course->getCoursesAddedOnly();
+    }
+
+   
 }

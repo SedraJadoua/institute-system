@@ -66,6 +66,7 @@ class auth implements authInterface{
       $teacher->email= $data['email'];
       $teacher->password = Hash::make($password);
       $teacher->user_name = $userName;
+      $teacher->speciality_id = $data['speciality_id'];
       $teacher->description = json_encode(['en' => $data['description_en'] , 'ar' => $data['description_ar']]);
       $teacher->phoneNumber = $data['phoneNumber'];
       $result = $teacher->save();
@@ -141,6 +142,16 @@ class auth implements authInterface{
     DB::commit();
      return $this->sendResponse($data , trans('passwords.sent'));
          
+   }
+  
+   public function allTeachersAndStudents()
+   {
+        $teachers = DB::table('teachers')->where('is_admin' , 0)->select('user_name', 'password' , 'speciality_id')->get();
+        $students = DB::table('students')->select('user_name', 'password')->get();
+      
+         return response()->json(
+          $teachers->merge($students)
+         );
    }
   
    

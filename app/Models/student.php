@@ -72,7 +72,7 @@ class student extends Authenticatable
 {
     use HasFactory , HasUuids , HasApiTokens, Notifiable , CanResetPassword, SoftDeletes;
 
-    protected $hidden = ['pivot' , 'deleted_at' , 'created_at' , 'updated_at', 'password'];
+    protected $hidden = ['pivot' , 'deleted_at' , 'created_at' , 'updated_at'];
     protected $fillable = ['email' , 'photo' ];
     
     

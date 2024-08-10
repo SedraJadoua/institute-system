@@ -13,6 +13,7 @@ class courseTeacherStudent extends Model
     use HasFactory  , HasUuids;
 
     protected $table = 'course_teacher_student';
+    protected $fillable  = ['course_teacher_id' , 'student_id' , 'paid'];
     protected $hidden = ['created_at' , 'updated_at'];
 
     /**

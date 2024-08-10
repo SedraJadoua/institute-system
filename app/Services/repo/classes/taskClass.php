@@ -2,7 +2,6 @@
 
 namespace App\Services\repo\classes;
 
-use App\Http\Requests\task\indexRequest;
 use App\Http\Requests\task\storeRequest;
 use App\Models\task;
 use App\Services\repo\interfaces\taskInterface;
@@ -49,5 +48,4 @@ class taskClass implements taskInterface
         return $this->returnError(__('strings.error_student_not_found'));
       }    
     }
-
 }

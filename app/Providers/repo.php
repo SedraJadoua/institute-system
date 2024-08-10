@@ -6,7 +6,9 @@ use App\Services\repo\classes\attendanceClass;
 use App\Services\repo\classes\auth;
 use App\Services\repo\classes\classroomClass;
 use App\Services\repo\classes\courseClass;
+use App\Services\repo\classes\dashboardClass;
 use App\Services\repo\classes\daysSystemClass;
+use App\Services\repo\classes\evaluationClass;
 use App\Services\repo\classes\messageClass;
 use App\Services\repo\classes\paymentClass;
 use App\Services\repo\classes\fileClass;
@@ -22,7 +24,9 @@ use App\Services\repo\interfaces\attendanceInterface;
 use App\Services\repo\interfaces\authInterface;
 use App\Services\repo\interfaces\classroomInterface;
 use App\Services\repo\interfaces\courseInterface;
+use App\Services\repo\interfaces\dashboardInterface;
 use App\Services\repo\interfaces\daysSystemInterface;
+use App\Services\repo\interfaces\evaluationInterface;
 use App\Services\repo\interfaces\imageInterface;
 use App\Services\repo\interfaces\sessionInterface;
 use App\Services\repo\interfaces\specialtInterface;
@@ -57,8 +61,9 @@ class repo extends ServiceProvider
        $this->app->bind(fileInterface::class , fileClass::class);
        $this->app->bind(messageInterface::class , messageClass::class);
        $this->app->bind(paymentInterface::class , paymentClass::class);
-       $this->app->bind(daysSystemInterface::class , daysSystemClass::class);
+       $this->app->bind(evaluationInterface::class , evaluationClass::class);
        $this->app->bind(localPaymentInterface::class , localPaymentClass::class);
+       $this->app->bind(dashboardInterface::class , dashboardClass::class);
     }
 
     /**

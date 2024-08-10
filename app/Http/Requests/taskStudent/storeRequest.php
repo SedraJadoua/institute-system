@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\daysSystem;
+namespace App\Http\Requests\taskStudent;
 
 use App\Trait\ResponseJson;
 use Illuminate\Contracts\Validation\Validator;
@@ -9,14 +9,13 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class storeRequest extends FormRequest
 {
-    use ResponseJson;
-   
-    protected function failedValidation(Validator $validator)
+    use ResponseJson ;
+    
+    protected function failedValidation(validator $validator)
     {
      $res = $this->sendListError($validator->errors());
      throw new HttpResponseException($res);   
     }
-    
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -33,13 +32,10 @@ class storeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'work_day' => 'required_without:day_workshop_ar,day_workshop_en|string',
-            'day_workshop_ar' => 'required_without:work_day|string',
-            'day_workshop_en' => 'required_without:work_day|string',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required_with:start_time|date_format:H:i|after:start_time',
-            'teacher_course_id' => 'required|exists:course_teacher,id',
-            'classroom_id' => 'required|exists:classrooms,id'
+            'task_id' => 'required|exists:tasks,id',
+            'student_id' => 'required|exists:students,id',
+            'studentMark' => 'required|integer' ,
+            'course_teacher_id' => 'required|exists:tasks,course_teacher_id' ,
         ];
     }
 }

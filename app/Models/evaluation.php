@@ -36,6 +36,9 @@ class evaluation extends Model
 {
     use HasFactory , HasUuids;
 
+    protected $fillable = ['course_teacher_id' , 'rate' , 'feedback'];
+    protected $hidden = [ 'updated_at'];
+
     /**
      * Get the student that owns the evaluation
      *

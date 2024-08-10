@@ -29,6 +29,7 @@ class specialtyClass implements specialtInterface {
     public function show(string $id){
         try {
             $specialty = specialty::with(['teachers' , 'courseTeacher.course'])->findOrFail($id);
+            
             return $specialty;
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return $this->returnError(__('strings.error_specialty_not_found'));

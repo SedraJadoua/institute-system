@@ -26,6 +26,7 @@ class teacherCourseFactory extends Factory
             'total_days' => fake()->numberBetween(10,60),
             'level' => fake()->randomElement(['0' , '1', '2' , '3']),
             'total_cost' => fake()->randomFloat(2, 2000 , 10000),
+            'accept' => '1',
         ];
     }
 }

@@ -21,6 +21,9 @@ return new class extends Migration
             $table->foreign('group_id')->references('id')->on('groups')->cascadeOnDelete();
             $table->unique([
                 'student_id',
+                'group_id',
+            ]);
+            $table->unique([
                 'teacher_id',
                 'group_id',
             ]);

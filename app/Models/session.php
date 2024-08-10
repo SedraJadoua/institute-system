@@ -43,7 +43,7 @@ class session extends Model
     use HasFactory , HasUuids;
 
     protected $table = 'sessions';
-    protected $fillable = ['date' , 'title' , 'course_teacher_id'];
+    protected $fillable = ['number_of_session', 'course_teacher_id'];
     protected $hidden = ['created_at' , 'updated_at'];
 
     public function getTitleAttribute($value){

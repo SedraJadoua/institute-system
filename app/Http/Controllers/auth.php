@@ -29,6 +29,10 @@ class auth extends Controller
     public function teacherRegister(teacherRegister $request){
        return $this->auth->teacherRegister($request);
     }
+    
+    public function allTeachersAndStudents(){
+       return $this->auth->allTeachersAndStudents();
+    }
 
     public function loginAdmin(adminLogin $request){
        return $this->auth->loginAdmin($request);

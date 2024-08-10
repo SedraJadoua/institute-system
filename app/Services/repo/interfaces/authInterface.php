@@ -19,6 +19,7 @@ interface authInterface{
     
     public function loginAdmin(adminLogin $request);
     public function login(login $request);
+    public function allTeachersAndStudents();
     public function forgotPassword(forgotPasswordRequest $request);
     public function changePassword(changePasswordRequest $request);
     

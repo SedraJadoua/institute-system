@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->json('title');
-            $table->time('date');
+            $table->integer('number_of_session');
             $table->uuid('course_teacher_id');
             $table->foreign('course_teacher_id')->references('id')->on('course_teacher')->cascadeOnDelete();
-            $table->timestamps();
-            
+            $table->timestamps();            
         });
     }
 

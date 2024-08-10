@@ -11,6 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // 0 Accepted
+        // 1 pending
+        // 2 not Accept
         Schema::create('course_teacher', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('teacher_id')->nullable();
@@ -18,6 +21,7 @@ return new class extends Migration
             $table->foreign('teacher_id')->references('id')->on('teachers')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('course_id')->references('id')->on('courses')->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('total_days');
+            $table->boolean('accept')->default(0);
             $table->enum('level', ['0' , '1' , '2' , '3']);
             $table->double('total_cost');
             $table->timestamps();

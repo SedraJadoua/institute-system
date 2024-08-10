@@ -48,7 +48,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class course extends Model implements HasMedia
 {
     use HasFactory , HasUuids  , InteractsWithMedia;
-    
+     
     protected $fillable = ['name' , 'description' , 'workshop' , 'specialty_id'];
     protected $hidden  = ['created_at' , 'updated_at' , 'media' ];
 
@@ -62,6 +62,8 @@ class course extends Model implements HasMedia
         $des = json_decode($value , true);
         return $des[Lang::getLocale()];
     }
+
+   
 
     /**
      * The teachers that belong to the course

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\student\courseTeacherStudentRequest;
 use App\Http\Requests\task\indexRequest;
+use App\Http\Requests\taskStudent\storeRequest;
+use App\Http\Requests\teacher\courseTeacherRequest;
 use App\Services\repo\interfaces\taskStudentInterface;
 use Illuminate\Http\Request;
 
@@ -27,17 +30,31 @@ class taskStudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(storeRequest $request)
     {
-        //
+        return $this->taskStudent->store($request);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function getTasksStudent(Request $request)
     {
-        //
+        return $this->taskStudent->getTasksStudent($request);
+    }
+
+    
+    public function marksStudentInCourse(courseTeacherStudentRequest $request)
+    {
+        return $this->taskStudent->marksStudentInCourse($request);
+    }
+
+    
+
+
+    public function getMarksForTeacher(courseTeacherRequest $request)
+    {
+        return $this->taskStudent->getMarksForTeacher($request);
     }
 
     /**

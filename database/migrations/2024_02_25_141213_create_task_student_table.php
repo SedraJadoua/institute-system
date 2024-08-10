@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('mark');
             $table->float('studentMark');
             $table->timestamp('date');
-            $table->uuid('course_teacher_student_id')->nullable();
-            $table->foreign('course_teacher_student_id')->references('id')->on('course_teacher_student')->nullOnDelete();
+            $table->uuid('course_teacher_student_id');
+            $table->foreign('course_teacher_student_id')->references('id')->on('course_teacher_student')->cascadeOnDelete();
             $table->timestamps();
         });
     }
